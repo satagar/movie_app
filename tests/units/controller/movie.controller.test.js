@@ -11,7 +11,7 @@ afterAll(async () => await close());
 
 const payload = {
     _id: '6378a804b5bbfec8ae71acb3',
-    name: `The ${faker.word.adjective()} ${faker.word.noun()}`,
+    title: `The ${faker.word.adjective()} ${faker.word.noun()}`,
     about: faker.lorem.sentence(),
     posterUrl: faker.image.imageUrl(),
     trailerUrl: faker.internet.url(),

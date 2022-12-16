@@ -26,6 +26,28 @@ module.exports = {
         check('refreshToken').trim().escape().not().isEmpty().withMessage('Refresh token cannot be empty').bail(),
         handleValidation
     ],
+    userCreate: [
+        check('email').trim().escape().not().isEmpty().withMessage('Email cannot be empty').bail().isEmail().withMessage('Email is invalid').bail().custom(value => {
+            return User.findOne({ email: value }).then(user => { if(user) return Promise.reject('Email is already taken')} );
+        }),
+        check('password').trim().escape().not().isEmpty().withMessage('Password cannot be empty').bail().isLength({ min: 5 }).withMessage('Password must be minimum 5 characters').bail(),
+        check('name').trim().escape().not().isEmpty().withMessage('Name cannot be empty').bail().isLength({ min: 3 }).withMessage('Name must be minimum 3 characters').bail(),
+        check('role').trim().escape().not().isEmpty().withMessage('Role cannot be empty').bail().custom(value => {
+            if(!User.roles.includes(value)) throw new Error(`Role is invalid. Please provide any of: ${User.roles.join()}`);
+        }),
+        handleValidation
+    ],
+    userUpdate: [
+        check('email').trim().escape().not().isEmpty().withMessage('Email cannot be empty').bail().isEmail().withMessage('Email is invalid').bail().custom(value => {
+            return User.findOne({ email: value, _id: { $ne: req.params.id } }).then(user => { if(user) return Promise.reject('Email is already taken')} );
+        }),
+        check('password').trim().escape().not().isEmpty().withMessage('Password cannot be empty').bail().isLength({ min: 5 }).withMessage('Password must be minimum 5 characters').bail(),
+        check('name').trim().escape().not().isEmpty().withMessage('Name cannot be empty').bail().isLength({ min: 3 }).withMessage('Name must be minimum 3 characters').bail(),
+        check('role').trim().escape().not().isEmpty().withMessage('Role cannot be empty').bail().custom(value => {
+            if(!User.roles.includes(value)) throw new Error(`Role is invalid. Please provide any of: ${User.roles.join()}`);
+        }),
+        handleValidation
+    ],
     movieCreate: [
         check('title').trim().escape().not().isEmpty().withMessage('Title cannot be empty').bail().isLength({ min: 1 }).withMessage('Name must be minimum 1 characters').bail(),
         check('about').trim().escape().not().isEmpty().withMessage('About cannot be empty').bail().isLength({ min: 50 }).withMessage('About must be minimum 100 characters').bail(),

@@ -2,7 +2,9 @@ const { isObjectId, handleServerErrorResponse, handleNotFoundResponse, handleBad
 const { Movie } = require("../models");
 
 const index = async (req, res) => {
-    const items = await Movie.find().catch(error => handleServerErrorResponse(res, error));
+    let query = {};
+    if(req.query.title) query.name = { '$regex': req.query.title, '$options': 'i' };
+    const items = await Movie.find(query).catch(error => handleServerErrorResponse(res, error));
     if(items) res.status(200).json(items);
 }
 
