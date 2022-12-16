@@ -98,3 +98,22 @@ exports.updateMovie = async (req,res)=>{
         })
     }
 }
+exports.deleteMovie = async (req,res)=>{
+    const id = req.params.id
+    try{
+        const movie = await movieModel.findOneAndDelete({_id:id});
+        if(!movie){
+            return res.status(400).send({
+                message:"movie already deleted!"
+            })
+        }
+        return res.status(201).send({
+            message:"movie deleted successfully!"
+        })
+    }catch(err){
+        console.log(err.message)
+        return res.status(500).send({
+            message:"internal server error!"
+        })
+    }
+}
