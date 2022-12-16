@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose");
+const { default: ShortUniqueId } = require("short-unique-id");
 
 const cbfcCertifications = ['U', 'U/A', 'A', 'S'];
 const statuses = ['UPCOMING', 'IN_THEATERS', 'NOT_SHOWING', 'RERUN'];
@@ -82,5 +83,13 @@ const movieSchema = mongoose.Schema({
         statuses: statuses,
     },
 });
+
+movieSchema.pre('save', async function(next) {
+    if(this.isNew) {
+        const uid = new ShortUniqueId({ length: 10 });
+        this.code = uid();
+    }
+    next();
+})
 
 module.exports = mongoose.model("Movie", movieSchema);

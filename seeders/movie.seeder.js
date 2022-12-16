@@ -10,7 +10,7 @@ module.exports = {
                 about: faker.lorem.sentence(),
                 posterUrl: faker.image.imageUrl(),
                 trailerUrl: faker.internet.url(),
-                runtime: faker.internet.email(),
+                runtime: faker.datatype.number({ min: 90, max: 180 }),
                 cbfcCertification: faker.helpers.arrayElement(Movie.cbfcCertifications),
                 releaseDate: faker.date.future(),
                 status: faker.helpers.arrayElement(Movie.statuses),
