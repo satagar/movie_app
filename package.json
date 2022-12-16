@@ -1,0 +1,29 @@
+{
+  "name": "movie_app",
+  "version": "1.0.0",
+  "description": "create movie booking app using nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rockfortvenkatesh/movie_app.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "venkatesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rockfortvenkatesh/movie_app/issues"
+  },
+  "homepage": "https://github.com/rockfortvenkatesh/movie_app#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.5",
+    "nodemon": "^2.0.20"
+  }
+}
