@@ -50,3 +50,51 @@ exports.movieFilter = async (req,res)=>{
         })
     }
 }
+exports.updateMovie = async (req,res)=>{
+    const id = req.params.id
+    const body = req.body;
+    try{ 
+        const find = await movieModel.findOne({_id:id})
+        if(!find){
+            return res.status(400).send({
+                message:"Movie dose not exists!"
+            })
+        }
+        if(body.name){
+            find.name = body.name
+        }
+        if(body.description){
+            find.description = body.description
+        }
+        if(body.releaseDate){
+            find.releaseDate = body.releaseDate
+        }
+        if(body.releaseStatus){
+            find.releaseStatus = body.releaseStatus
+        }
+        if(body.director){
+            find.director = body.director
+        }
+        if(body.language){
+            find.language = body.language
+        }
+        if(body.movieImage){
+            find.movieImage = body.movieImage
+        }
+        if(body.price){
+            find.price = body.price
+        }
+        if(body.trailerVideo){
+            find.trailerVideo = body.trailerVideo
+        }
+       await find.save()
+       return res.status(201).send({
+        message:"movie update successfully!"
+    })
+    }catch(err){
+        console.log(err.message)
+        return res.status(500).send({
+            message:"Internal server error!"
+        })
+    }
+}

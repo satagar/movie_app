@@ -5,4 +5,4 @@ const createMovie = async (data)=>{
         await movieModel.create(data[i])
     }
 }
-createMovie(movieSeed.fakeMovie)
+// createMovie(movieSeed.fakeMovie)
