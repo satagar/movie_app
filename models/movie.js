@@ -84,7 +84,7 @@ const movieSchema = mongoose.Schema({
     },
 });
 
-movieSchema.pre('save', async function(next) {
+movieSchema.pre('validate', async function(next) {
     if(this.isNew) {
         const uid = new ShortUniqueId({ length: 10 });
         this.code = uid();

@@ -59,7 +59,6 @@ const update = async (req, res) => {
 
 const destroy = async (req, res) => {
     if(!isObjectId(req.params.id)) return handleNotFoundResponse(res, 'Invalid ID');
-    if(req.params.id === req.Movie.id) return handleBadRequestResponse(res, 'Cannot delete Self');
     const data = await Movie.findById(req.params.id).catch(error => handleServerErrorResponse(res, error));
     if(data) {
         const deleted = data.deleteOne({ _id: req.params.id }).catch(error => handleServerErrorResponse(res, error));

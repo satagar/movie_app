@@ -15,7 +15,7 @@ const payload = {
     about: faker.lorem.sentence(),
     posterUrl: faker.image.imageUrl(),
     trailerUrl: faker.internet.url(),
-    runtime: faker.internet.email(),
+    runtime: faker.datatype.number({ min: 90, max: 180 }),
     cbfcCertification: faker.helpers.arrayElement(Movie.cbfcCertifications),
     releaseDate: faker.date.future(),
     status: faker.helpers.arrayElement(Movie.statuses),
@@ -59,9 +59,14 @@ describe('index', () => {
             expect.arrayContaining([
                 expect.objectContaining({
                     _id: mongoose.Types.ObjectId(payload._id),
-                    name: payload.name,
-                    email: payload.email,
-                    role: 'customer'
+                    title: payload.title,
+                    about: payload.about,
+                    posterUrl: payload.posterUrl,
+                    trailerUrl: payload.trailerUrl,
+                    runtime: payload.runtime,
+                    cbfcCertification: payload.cbfcCertification,
+                    releaseDate: payload.releaseDate,
+                    status: payload.status
                 })
             ])
         );
@@ -102,9 +107,14 @@ describe('create', () => {
         expect(res.status).toHaveBeenCalledWith(201);
         expect(res.json).toHaveBeenCalledWith(
             expect.objectContaining({
-                name: payload.name,
-                email: payload.email,
-                role: 'customer'
+                title: payload.title,
+                about: payload.about,
+                posterUrl: payload.posterUrl,
+                trailerUrl: payload.trailerUrl,
+                runtime: payload.runtime,
+                cbfcCertification: payload.cbfcCertification,
+                releaseDate: payload.releaseDate,
+                status: payload.status
             })
         );
     })
@@ -149,9 +159,14 @@ describe('read', () => {
         expect(res.json).toHaveBeenCalledWith(
             expect.objectContaining({
                 _id: mongoose.Types.ObjectId(payload._id),
-                name: payload.name,
-                email: payload.email,
-                role: 'customer'
+                title: payload.title,
+                about: payload.about,
+                posterUrl: payload.posterUrl,
+                trailerUrl: payload.trailerUrl,
+                runtime: payload.runtime,
+                cbfcCertification: payload.cbfcCertification,
+                releaseDate: payload.releaseDate,
+                status: payload.status
             })
         );
     })
@@ -237,9 +252,14 @@ describe('update', () => {
         expect(res.json).toHaveBeenCalledWith(
             expect.objectContaining({
                 _id: mongoose.Types.ObjectId(payload._id),
-                name: payload.name,
-                email: payload.email,
-                role: 'customer'
+                title: payload.title,
+                about: payload.about,
+                posterUrl: payload.posterUrl,
+                trailerUrl: payload.trailerUrl,
+                runtime: payload.runtime,
+                cbfcCertification: payload.cbfcCertification,
+                releaseDate: payload.releaseDate,
+                status: payload.status
             })
         );
     })
@@ -314,7 +334,7 @@ describe('destroy', () => {
         const req = mockRequest();
         const res = mockResponse();
         req.params.id = payload._id;
-        req.Movie.id = 1;
+        req.user.id = 1;
 
         // act
         await destroy(req, res);
@@ -325,29 +345,14 @@ describe('destroy', () => {
         expect(res.json).toHaveBeenCalledWith(
             expect.objectContaining({
                 _id: mongoose.Types.ObjectId(payload._id),
-                name: payload.name,
-                email: payload.email,
-                role: 'customer'
-            })
-        );
-    })
-
-    it('should respond 400 on trying to delete self', async () => {
-
-        // arrange
-        const req = mockRequest();
-        const res = mockResponse();
-        req.params.id = payload._id;
-        req.Movie.id = payload._id;
-
-        // act
-        await destroy(req, res);
-
-        // assert
-        expect(res.status).toHaveBeenCalledWith(400);
-        expect(res.json).toHaveBeenCalledWith(
-            expect.objectContaining({
-                message: expect.any(String)
+                title: payload.title,
+                about: payload.about,
+                posterUrl: payload.posterUrl,
+                trailerUrl: payload.trailerUrl,
+                runtime: payload.runtime,
+                cbfcCertification: payload.cbfcCertification,
+                releaseDate: payload.releaseDate,
+                status: payload.status
             })
         );
     })
@@ -359,7 +364,7 @@ describe('destroy', () => {
         const req = mockRequest();
         const res = mockResponse();
         req.params.id = payload._id;
-        req.Movie.id = 1;
+        req.user.id = 1;
 
         // act
         await destroy(req, res);
@@ -400,7 +405,7 @@ describe('destroy', () => {
         const req = mockRequest();
         const res = mockResponse();
         req.params.id = payload._id;
-        req.Movie.id = 1;
+        req.user.id = 1;
 
         // act
         await destroy(req, res);
