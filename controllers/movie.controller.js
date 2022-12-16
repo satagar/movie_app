@@ -26,3 +26,27 @@ exports.createMovies = async (req,res)=>{
             })
           }
 }
+
+exports.movieFilter = async (req,res)=>{
+    const find = {};
+    const query = req.query;
+    if(query.id){
+           find._id = query.id
+    }
+    if(query.name){
+        find.name = {
+            $regex:query.name
+        }
+    }
+    try{
+        const finded = await movieModel.find(find)
+        return res.send(201).send({
+            Movies : finded
+        })
+    }catch(err){
+        console.log(err.message)
+        return res.status(500).send({
+            message:"Internal server error"
+        })
+    }
+}
