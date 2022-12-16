@@ -13,7 +13,7 @@ exports.movieValidate = (req,res,next)=>{
     }
     if(!body.director){
         return res.status(404).send({
-            message:"Movie director  not found! directoris required!"
+            message:"Movie director  not found! director is required!"
         })
     }
     if(!body.movieImage){
@@ -23,7 +23,7 @@ exports.movieValidate = (req,res,next)=>{
     }
     if(!body.price){
         return res.status(404).send({
-            message:"Movie Price  not found! directoris Price!"
+            message:"Movie Price  not found! Price is required!"
         })
     }
     if(!body.price){
