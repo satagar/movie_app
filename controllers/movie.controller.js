@@ -15,7 +15,7 @@ exports.createMovies = async (req,res)=>{
           }
           try{
                 const movies = await movieModel.create(movie)
-                return res.status(500).send({
+                return res.status(201).send({
                     message:"Movie created successfully!",
                     created_Movie:movies
                 })
@@ -57,7 +57,7 @@ exports.updateMovie = async (req,res)=>{
         const find = await movieModel.findOne({_id:id})
         if(!find){
             return res.status(400).send({
-                message:"Movie dose not exists!"
+                message:"Movie does not exists!"
             })
         }
         if(body.name){
