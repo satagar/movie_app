@@ -37,11 +37,11 @@ apiRouterSecure.route('/users/:id')
     .delete(authorize, userController.destroy);
 
 apiRouterSecure.route('/movies')
-    .post(authorizeRoles['admin', 'client'], validator.movieCreate, movieController.create);
+    .post(authorize, validator.movieCreate, movieController.create);
 
 apiRouterSecure.route('/movies/:id')
-    .put(authorizeRoles['admin', 'client'], validator.movieUpdate, movieController.update)
-    .delete(authorizeRoles['admin', 'client'], movieController.destroy);
+    .put(authorize, validator.movieUpdate, movieController.update)
+    .delete(authorize, movieController.destroy);
 
 module.exports = {
     apiRouter: apiRouter, 
