@@ -39,6 +39,6 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.0",
-    "short-unique-id": "^4.4.4"
+    "mongoose-slug-generator": "^1.0.4"
   }
 }

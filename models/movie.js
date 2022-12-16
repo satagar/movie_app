@@ -1,18 +1,20 @@
 const { default: mongoose } = require("mongoose");
-const { default: ShortUniqueId } = require("short-unique-id");
+const slug = require("mongoose-slug-generator");
 
 const cbfcCertifications = ['U', 'U/A', 'A', 'S'];
 const statuses = ['UPCOMING', 'IN_THEATERS', 'NOT_SHOWING', 'RERUN'];
 
+mongoose.plugin(slug);
+
 const movieSchema = mongoose.Schema({
-    code: {
-        type: String,
-        unique: true,
-        required: true
-    },
     title: {
         type: String,
         required: true,
+    },
+    slug: {
+        type: String,
+        slug: 'title',
+        unique: true
     },
     about: {
         type: String,
@@ -83,13 +85,5 @@ const movieSchema = mongoose.Schema({
         statuses: statuses,
     },
 });
-
-movieSchema.pre('validate', async function(next) {
-    if(this.isNew) {
-        const uid = new ShortUniqueId({ length: 10 });
-        this.code = uid();
-    }
-    next();
-})
 
 module.exports = mongoose.model("Movie", movieSchema);
