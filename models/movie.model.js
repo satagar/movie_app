@@ -14,10 +14,11 @@ const movieSchema = new mongoose.Schema({
     releaseStatus:{
         type:String,
         default:"RELEASED",
-        enum:['RELEASED','UPCOMING','RUNING']
+        enum:['RELEASED','UPCOMING','BLOCK']
     },
     director:{
         type:String,
+        require:true
     },
     language:{
         type:String,
@@ -52,3 +53,6 @@ const movieSchema = new mongoose.Schema({
         }
     }
 })
+
+const movieModel = mongoose.model('movies',movieSchema)
+module.exports = movieModel;
