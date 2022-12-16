@@ -1,4 +1,5 @@
 const movieModel = require('../models/movie.model');
+const  movieSeed = require('../seeders/movie.seed');
 
 exports.createMovies = async (req,res)=>{
           const body = req.body
@@ -40,7 +41,7 @@ exports.movieFilter = async (req,res)=>{
     }
     try{
         const finded = await movieModel.find(find)
-        return res.send(201).send({
+        return res.status(200).send({
             Movies : finded
         })
     }catch(err){
@@ -117,3 +118,10 @@ exports.deleteMovie = async (req,res)=>{
         })
     }
 }
+const createMovie = async (data)=>{
+    for(let i=0;i<data.length;i++){
+        await movieModel.create(data[i])
+    }
+    console.log('fake movie created')
+}
+// createMovie(movieSeed.fakeMovie)
