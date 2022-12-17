@@ -1,4 +1,4 @@
-const movieModel = require('../models/movie.model');
+const MOVIE = require('../models/movie.model');
 const  movieSeed = require('../seeders/movie.seed');
 
 exports.createMovies = async (req,res)=>{
@@ -15,7 +15,7 @@ exports.createMovies = async (req,res)=>{
             trailerVideo:body.trailerVideo
           }
           try{
-                const movies = await movieModel.create(movie)
+                const movies = await MOVIE.create(movie)
                 return res.status(201).send({
                     message:"Movie created successfully!",
                 })
@@ -39,7 +39,7 @@ exports.movieFilter = async (req,res)=>{
         }
     }
     try{
-        const finded = await movieModel.find(find)
+        const finded = await MOVIE.find(find)
         return res.status(200).send({
             Movies : finded
         })
@@ -54,7 +54,7 @@ exports.updateMovie = async (req,res)=>{
     const id = req.params.id
     const body = req.body;
     try{ 
-        const find = await movieModel.findOne({_id:id})
+        const find = await MOVIE.findOne({_id:id})
         if(!find){
             return res.status(400).send({
                 message:"Movie does not exists!"
@@ -101,7 +101,7 @@ exports.updateMovie = async (req,res)=>{
 exports.deleteMovie = async (req,res)=>{
     const id = req.params.id
     try{
-        const movie = await movieModel.findOneAndDelete({_id:id});
+        const movie = await MOVIE.findOneAndDelete({_id:id});
         if(!movie){
             return res.status(400).send({
                 message:"movie already deleted!"
@@ -119,7 +119,7 @@ exports.deleteMovie = async (req,res)=>{
 }
 const createMovie = async (data)=>{
     for(let i=0;i<data.length;i++){
-        await movieModel.create(data[i])
+        await MOVIE.create(data[i])
     }
     console.log('fake movie created')
 }

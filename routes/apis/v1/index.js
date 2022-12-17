@@ -12,6 +12,7 @@ route.delete('/movie/delete/:id',movieController.deleteMovie)
 route.post('/theater/create',theaterMiddleware.theaterReqBodyValidate,theaterController.createTheater)
 route.get('/theater/:id',theaterController.getTheaterById)
 route.get('/theater/filter',theaterController.getTheaterByAllFileds)
+route.put('/theater/update/:id',theaterController.updateTheater)
 
 
 module.exports = route;

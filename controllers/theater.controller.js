@@ -89,9 +89,7 @@ exports.updateTheater = async (req, res) => {
         reqData.pincode = body.pincode
     }
     try {
-        const UpdatedTheater = await THEATER.updateOne({
-            _id: id
-        }, reqData)
+        const UpdatedTheater = await THEATER.updateOne({_id: id}, reqData)
         if (!UpdatedTheater) {
             return res.status(400).send({
                 message: "Theater  does not exists!",
