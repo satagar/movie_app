@@ -1,4 +1,4 @@
-exports.movieValidate = async(req, res, next) => {
+exports.theatreValidate = async(req, res, next) => {
     const body = req.body;
 
     if (!body.name) {

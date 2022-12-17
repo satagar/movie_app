@@ -19,7 +19,7 @@ exports.theatreCreation = async(req, res) => {
     }
 }
 
-exports.getAllMovies = async(req, res) => {
+exports.getAlltheatres = async(req, res) => {
     try {
         const theatres = await Theatre.find();
         res.status(200).send(theatres)
