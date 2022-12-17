@@ -88,10 +88,17 @@ exports.update = async(req, res) => {
 
 exports.delete = async(req, res) => {
     try {
-        const deleteTheatre = await Theatre.deleteOne({ _id: req.params.id });
-        res.status(200).send({
-            message: 'Deleted Theatre Details Successfully'
-        })
+        const theatre = await Theatre.find({ _id: req.params.id });
+        if (theatre) {
+            const deleteTheatre = await Theatre.deleteOne({ _id: req.params.id });
+            res.status(200).send({
+                message: 'Deleted Theatre Details Successfully'
+            })
+        } else {
+            res.status(404).send({
+                message: "Theatre Not Found!"
+            })
+        }
     } catch (error) {
         console.log(error);
         return res.status(500).send({
