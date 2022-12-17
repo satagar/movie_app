@@ -12,8 +12,8 @@ exports.createMovie= async(req,res)=>{
         language:body.language,
     }
     try {
-            const movie = await Movie.create(movieObj);
-            res.status(201).send(movie);
+        const movie = await Movie.create(movieObj);
+        res.status(201).send(movie);
 
     } catch (error) {
         res.status(500).send({
