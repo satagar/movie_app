@@ -1,0 +1,1 @@
+exports.secret = "<Movie_Booking_App>"
