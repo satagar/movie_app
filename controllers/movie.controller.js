@@ -18,7 +18,6 @@ exports.createMovies = async (req,res)=>{
                 const movies = await movieModel.create(movie)
                 return res.status(201).send({
                     message:"Movie created successfully!",
-                    created_Movie:movies
                 })
           }catch(err){
              console.log(err.message)
