@@ -26,7 +26,7 @@ exports.getTheaterById = async (req, res) => {
     const id = req.params.id
     if (!id) {
         return res.status(400).send({
-            message: "Id not found!"
+            message: "bad request!"
         })
     }
     try {
@@ -34,7 +34,7 @@ exports.getTheaterById = async (req, res) => {
             _id: id
         })
         if (!theater) {
-            return res.status(400).send({
+            return res.status(404).send({
                 message: "theater does not exists!"
             })
         }
@@ -75,29 +75,54 @@ exports.getTheaterByAllFileds = async (req, res) => {
 exports.updateTheater = async (req, res) => {
     const body = req.body
     const id = req.params.id
-    const reqData = {}
-    if (body.name) {
-        reqData.name = body.name
-    }
-    if (body.description) {
-        reqData.description = body.description
-    }
-    if (body.city) {
-        reqData.city = body.city
-    }
-    if (body.pincode) {
-        reqData.pincode = body.pincode
-    }
     try {
-        const UpdatedTheater = await THEATER.updateOne({_id: id}, reqData)
-        if (!UpdatedTheater) {
-            return res.status(400).send({
+        const theater = await THEATER.findOne({_id: id})
+        if (!theater) {
+            return res.status(404).send({
                 message: "Theater  does not exists!",
             })
         }
+        if (body.name) {
+            theater.name = body.name
+        }
+        if (body.description) {
+            theater.description = body.description
+        }
+        if (body.city) {
+            theater.city = body.city
+        }
+        if (body.pincode) {
+            theater.pincode = body.pincode
+        }
+        await theater.save()
         return res.status(200).send({
             message: "Theater updated successfully!",
-            Updated_Theater: UpdatedTheater
+            Before_Update: theater
+        })
+    } catch (err) {
+        console.log(err.message)
+        return res.status(500).send({
+            message: "Internal server error!"
+        })
+    }
+}
+exports.deleteTheater = async (req, res) => {
+    const id = req.params.id
+    if (!id) {
+        return res.status(400).send({
+            message: "bad request!"
+        })
+    }
+    try {
+        const theater = await THEATER.findOneAndDelete({_id: id})
+        if (!theater) {
+            return res.status(404).send({
+                message: "Theater does not exists for delete.",
+            })
+        }
+        return res.status(200).send({
+            message: "Theater deleted successfully!",
+            deleted_theater : theater
         })
     } catch (err) {
         console.log(err.message)

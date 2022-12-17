@@ -13,6 +13,6 @@ route.post('/theater/create',theaterMiddleware.theaterReqBodyValidate,theaterCon
 route.get('/theater/:id',theaterController.getTheaterById)
 route.get('/theater/filter',theaterController.getTheaterByAllFileds)
 route.put('/theater/update/:id',theaterController.updateTheater)
-
+route.delete('/theater/delete/:id',theaterController.deleteTheater)
 
 module.exports = route;
