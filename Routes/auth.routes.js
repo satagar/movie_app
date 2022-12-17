@@ -18,7 +18,7 @@ router.get("/movie_app/api/v1/movies", movieController.getAllMovies);
 router.post("/movie_app/api/v1/theatres", validateTheatre.theatreValidate, theatreController.theatreCreation);
 router.get("/movie_app/api/v1/theatres", theatreController.getAlltheatres);
 router.get("/movie_app/api/v1/theatres/:id", theatreController.getById);
-router.get("/movie_app/api/v1/theatres/query?pincode", theatreController.getByPincode);
+router.get("/movie_app/api/v1/theatres/:pincode", theatreController.getByPincode);
 router.get("/movie_app/api/v1/theatres/:city", theatreController.getByCity);
 router.put("/movie_app/api/v1/theatres/:id", theatreController.update);
 router.delete("/movie_app/api/v1/theatres/:id", theatreController.delete);
