@@ -8,6 +8,10 @@ route.post('/movie/create',movieMiddleware.movieValidate,movieController.createM
 route.get('/movie/filter',movieController.movieFilter)
 route.put('/movie/update/:id',movieController.updateMovie)
 route.delete('/movie/delete/:id',movieController.deleteMovie)
+//------------------------------------------Theater routes---------------------------------------------
 route.post('/theater/create',theaterMiddleware.theaterReqBodyValidate,theaterController.createTheater)
+route.get('/theater/:id',theaterController.getTheaterById)
+route.get('/theater/filter',theaterController.getTheaterByAllFileds)
+
 
 module.exports = route;
