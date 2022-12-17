@@ -1,5 +1,5 @@
 const { check, validationResult } = require('express-validator');
-const { User, Movie } = require("../models");
+const { User, Movie, Theater } = require("../models");
 
 const handleValidation = (req, res, next) => {
     const errors = validationResult(req);
@@ -49,8 +49,8 @@ module.exports = {
         handleValidation
     ],
     movieCreate: [
-        check('title').trim().escape().not().isEmpty().withMessage('Title cannot be empty').bail().isLength({ min: 1 }).withMessage('Name must be minimum 1 characters').bail(),
-        check('about').trim().escape().not().isEmpty().withMessage('About cannot be empty').bail().isLength({ min: 50 }).withMessage('About must be minimum 100 characters').bail(),
+        check('title').trim().escape().not().isEmpty().withMessage('Title cannot be empty').bail().isLength({ min: 1 }).withMessage('Title must be minimum 1 characters').bail(),
+        check('about').trim().escape().not().isEmpty().withMessage('About cannot be empty').bail().isLength({ min: 50 }).withMessage('About must be minimum 50 characters').bail(),
         check('posterUrl').isURL().withMessage('Poster URL must be an URL').bail(),
         check('trailerUrl').isURL().withMessage('Poster URL must be an URL').bail(),
         check('runtime').trim().escape().not().isEmpty().withMessage('Runtime cannot be empty').bail().isInt().withMessage('Runtime must be an Integer').bail(),
@@ -68,8 +68,8 @@ module.exports = {
         handleValidation
     ],
     movieUpdate: [
-        check('title').trim().escape().not().isEmpty().withMessage('Title cannot be empty').bail().isLength({ min: 1 }).withMessage('Name must be minimum 1 characters').bail(),
-        check('about').trim().escape().not().isEmpty().withMessage('About cannot be empty').bail().isLength({ min: 50 }).withMessage('About must be minimum 100 characters').bail(),
+        check('title').trim().escape().not().isEmpty().withMessage('Title cannot be empty').bail().isLength({ min: 1 }).withMessage('Title must be minimum 1 characters').bail(),
+        check('about').trim().escape().not().isEmpty().withMessage('About cannot be empty').bail().isLength({ min: 50 }).withMessage('About must be minimum 50 characters').bail(),
         check('posterUrl').isURL().withMessage('Poster URL must be an URL').bail(),
         check('trailerUrl').isURL().withMessage('Poster URL must be an URL').bail(),
         check('runtime').trim().escape().not().isEmpty().withMessage('Runtime cannot be empty').bail().isInt().withMessage('Runtime must be an Integer').bail(),
@@ -84,6 +84,36 @@ module.exports = {
         check('directors').trim().escape().not().isEmpty().withMessage('Directors cannot be empty').bail().isArray().withMessage('Directors must be an array').bail(),
         check('writers').trim().escape().not().isEmpty().withMessage('Writers cannot be empty').bail().isArray().withMessage('Writers must be an array').bail(),
         check('cast').trim().escape().not().isEmpty().withMessage('Casst cannot be empty').bail().isArray().withMessage('Cast must be an array').bail(),
+        handleValidation
+    ],
+    theaterCreate: [
+        check('name').trim().escape().not().isEmpty().withMessage('Name cannot be empty').bail().isLength({ min: 3 }).withMessage('Name must be minimum 3 characters').bail(),
+        check('description').trim().escape().not().isEmpty().withMessage('Description cannot be empty').bail().isLength({ min: 50 }).withMessage('Description must be minimum 50 characters').bail(),
+        check('city').trim().escape().not().isEmpty().withMessage('City cannot be empty').bail().isLength({ min: 1 }).withMessage('City must be minimum 1 characters').bail(),
+        check('address').trim().escape().not().isEmpty().withMessage('Address cannot be empty').bail(),
+        check('coordinates').trim().escape().not().isEmpty().withMessage('Coordinates cannot be empty').bail().isArray().withMessage('Coordinates must be an array').bail().custom(value => {
+            if(item.length < 2) throw new Error(`Coordinates must contain two values`);
+            for(item of value) if(isNaN(item)) throw new Error(`Coordinates must contain only numbers`);
+        }),
+        check('facilities').trim().escape().not().isEmpty().withMessage('Facilities cannot be empty').bail().isArray().withMessage('Genres must be an array').bail().custom(value => {
+            for(item of value) if(!Theater.facilites.includes(item)) throw new Error(`One of the facilities is invalid. Please provide any of: ${Theater.facilites.join()}`);
+        }),
+        check('refundsEnabled').trim().escape().not().isEmpty().withMessage('Refunds Enabled cannot be empty').bail().isBoolean().withMessage('Refunds Enabled must be a boolean').bail(),
+        handleValidation
+    ],
+    theaterUpdate: [
+        check('name').trim().escape().not().isEmpty().withMessage('Name cannot be empty').bail().isLength({ min: 3 }).withMessage('Name must be minimum 3 characters').bail(),
+        check('description').trim().escape().not().isEmpty().withMessage('Description cannot be empty').bail().isLength({ min: 50 }).withMessage('Description must be minimum 50 characters').bail(),
+        check('city').trim().escape().not().isEmpty().withMessage('City cannot be empty').bail().isLength({ min: 1 }).withMessage('City must be minimum 1 characters').bail(),
+        check('address').trim().escape().not().isEmpty().withMessage('Address cannot be empty').bail(),
+        check('coordinates').trim().escape().not().isEmpty().withMessage('Coordinates cannot be empty').bail().isArray().withMessage('Coordinates must be an array').bail().custom(value => {
+            if(item.length < 2) throw new Error(`Coordinates must contain two values`);
+            for(item of value) if(isNaN(item)) throw new Error(`Coordinates must contain only numbers`);
+        }),
+        check('facilities').trim().escape().not().isEmpty().withMessage('Facilities cannot be empty').bail().isArray().withMessage('Genres must be an array').bail().custom(value => {
+            for(item of value) if(!Theater.facilites.includes(item)) throw new Error(`One of the facilities is invalid. Please provide any of: ${Theater.facilites.join()}`);
+        }),
+        check('refundsEnabled').trim().escape().not().isEmpty().withMessage('Refunds Enabled cannot be empty').bail().isBoolean().withMessage('Refunds Enabled must be a boolean').bail(),
         handleValidation
     ]
 }

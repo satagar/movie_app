@@ -24,7 +24,7 @@ module.exports = {
     },
 
     handleServerErrorResponse: (res, error) => {
-        if(server.ENV !== 'development') error = undefined;
+        if(server.ENV === 'production') error = undefined;
         const defaultMessage = 'A server error occured';
         switch(typeof error) {
             case 'object': error.message = error.message || defaultMessage; break;

@@ -2,6 +2,7 @@ const express = require('express');
 const authController = require('../controllers/auth.controller');
 const userController = require('../controllers/user.controller');
 const movieController = require('../controllers/movie.controller');
+const theaterController = require('../controllers/theater.controller');
 const { authenticate, authorize, authorizeRoles } = require('../middlewares/auth');
 const validator = require('../middlewares/validators');
 
@@ -22,8 +23,8 @@ apiRouter.route('/refresh').post(validator.authRefresh, authController.refresh);
 apiRouter.route('/movies').get(movieController.index);
 apiRouter.route('/movies/:id').get(movieController.read);
 
-// apiRouter.route('/cinemas').get();
-// apiRouter.route('/cinemas/:id').get();
+apiRouter.route('/theaters').get(theaterController.index);
+apiRouter.route('/theaters/:id').get(theaterController.read);
 
 apiRouterSecure.use(authenticate);
 
@@ -42,6 +43,13 @@ apiRouterSecure.route('/movies')
 apiRouterSecure.route('/movies/:id')
     .put(authorize, validator.movieUpdate, movieController.update)
     .delete(authorize, movieController.destroy);
+
+apiRouterSecure.route('/theaters')
+    .post(authorizeRoles(['admin', 'client']), validator.theaterCreate, theaterController.create);
+
+apiRouterSecure.route('/theaters/:id')
+    .put(authorizeRoles(['admin', 'client']), validator.theaterUpdate, theaterController.update)
+    .delete(authorizeRoles(['admin', 'client']), theaterController.destroy);
 
 module.exports = {
     apiRouter: apiRouter, 
