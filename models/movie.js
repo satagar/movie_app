@@ -3,6 +3,7 @@ const slug = require("mongoose-slug-generator");
 
 const cbfcCertifications = ['U', 'U/A', 'A', 'S'];
 const statuses = ['UPCOMING', 'IN_THEATERS', 'NOT_SHOWING', 'RERUN'];
+const languages = ['ENGLISH', 'HINDI'];
 
 mongoose.plugin(slug);
 
@@ -44,6 +45,11 @@ const movieSchema = mongoose.Schema({
         enum: statuses,
         default: 'UPCOMING'
     },
+    languages: {
+        type: [String],
+        enum: languages,
+        required: true
+    },
     genres: {
         type: [{
             type: mongoose.Schema.Types.ObjectId,
@@ -83,6 +89,7 @@ const movieSchema = mongoose.Schema({
     statics: {
         cbfcCertifications: cbfcCertifications,
         statuses: statuses,
+        languages: languages,
     },
 });
 
