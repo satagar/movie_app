@@ -18,7 +18,7 @@ const createMovie = async (req, res) => {
     }catch(err){
         console.log(err.message);
         res.status(500).send({
-            message: "Failed in creating movie. Please try again after somtime!"
+            message: "Failed in creating movie. Please try again after sometime!"
         });
     }
 }
