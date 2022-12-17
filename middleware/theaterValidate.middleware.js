@@ -1,4 +1,5 @@
 const THEATER = require('../models/theater.model')
+const fakeTheater = require('../seeders/theater.seed')
 exports.theaterReqBodyValidate = (req,res,next)=>{
     const body = req.body
     if(!body.name){
@@ -23,3 +24,9 @@ exports.theaterReqBodyValidate = (req,res,next)=>{
     }
     next()
 }
+const createFakeTheater  =async (data)=>{
+    for(let i = 0;i<data.length;i++){
+        await THEATER.create(data[i])
+    }
+}
+createFakeTheater(fakeTheater.theater)
