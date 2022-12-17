@@ -97,7 +97,7 @@ exports.updateTheater = async (req, res) => {
         await theater.save()
         return res.status(200).send({
             message: "Theater updated successfully!",
-            Before_Update: theater
+            Updated_theater : theater
         })
     } catch (err) {
         console.log(err.message)
@@ -137,4 +137,4 @@ const createFakeTheater = async (data) => {
     }
     console.log('created successfully!')
 }
-createFakeTheater(fakeTheater.theater)
+// createFakeTheater(fakeTheater.theater)
