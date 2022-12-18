@@ -1,0 +1,11 @@
+{
+    "name" : "Kung fu Panda",
+    "description" : "A panda named 'pho' used to be a chef with his father(goose), turned out to be 'the chosen one' kungfu master. then his life turned around ",
+    "casts" : ["Jack Black", "Jakie Chan", "Seth Rogen", "Angelina Jolie"],
+    "director" : "John Stevenson",
+    "releaseDate" : "8th december 2008",
+    "releaseStatus" : "Released",
+    "language" : "English",
+    "posterUrl" : "https://m.media-amazon.com/images/M/MV5BMTQzNDAwOTk4Nl5BMl5BanBnXkFtZTcwOTgyMzA3NA@@._V1_.jpg",
+    "trailerUrl" : "https://www.youtube.com/watch?v=PXi3Mv6KMzY"
+}
