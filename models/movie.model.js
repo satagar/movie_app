@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
+const sts = ["RELEASED", "UNRELEASED", "BLOCKED"]
+
 const movieSchema = new mongoose.Schema({
     name : {
         type : String,
         required : true,
-        lowercase : true,
-        unique : true
+        lowercase : true
     },
     description : {
         type : String,
@@ -21,7 +22,8 @@ const movieSchema = new mongoose.Schema({
     },
     releaseStatus : {
         type : String,
-        required : true
+        required : true,
+        enum : sts
     },
     director : {
         type : String,

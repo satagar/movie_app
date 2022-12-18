@@ -18,11 +18,11 @@ exports.createMovie = async (req, res) => {
         trailerUrl : body.trailerUrl
     }
     try {
-        console.log(`Movie created successfully!`)
+        console.log(`Movie added successfully!`)
         const movie = await Movie.create(movieObj);
         res.status(201).send(movie);
     } catch (error) {
-        console.log(error.message);
+        console.log(error.message);  
         res.status(500).send({
             message : `Some error occured in processing your request. Please try again after sometime!`
         });
@@ -31,11 +31,11 @@ exports.createMovie = async (req, res) => {
 
 
 exports.deleteMovie = async (req, res) => {
-    const reqName = req.params.name;
+    const reqId = req.params.id;
     
     try {
         console.log('movie deleted successfully')
-        const movie = await  Movie.deleteOne({name: reqName})
+        const movie = await  Movie.deleteOne({name: reqId})
         res.status(200).send({
             message : `movie deleted successfully`
         });
@@ -48,12 +48,33 @@ exports.deleteMovie = async (req, res) => {
 }
 
 
-exports.getMovie = async (req, res) => {
-    const reqName = req.params.name;
+exports.getAllMovie = async (req, res) => {
+    try {
+        console.log('all movies fetched successfully!');
+        const movie = await Movie.find()
+        res.status(200).send(movie);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send({
+            message : `Some error occured in processing your request. Please try again after sometime!`
 
+        });
+    }
+}
+
+
+
+exports.getMovie = async (req, res) => {
+    const criteria = {};
+    if(req.query.name) {
+        criteria.name = req.query.name
+    }
+    if(req.query.id) {
+        criteria.id = req.query.id
+    }
     try {
         console.log('movie fetched successfully!');
-        const movie = await Movie.findOne({name : reqName})
+        const movie = await Movie.findOne(criteria)
         res.status(200).send(movie);
     } catch (error) {
         console.log(error.message);
@@ -65,14 +86,16 @@ exports.getMovie = async (req, res) => {
 }
 
 exports.updateMovie = async (req, res) => {
+    const reqId = req.params.id
     const body = req.body;
 
     try {
-        const movieInDb = await Movie.findOne({name : body.name})
+        const movieInDb = await Movie.findOne({ _id : reqId})
         if(!movieInDb) {
             res.status(400).send({
                 message : `Something wrong with the update data!`
             })
+            return;
         }
 
         movieInDb.name = body.name != undefined ? body.name : movieInDb.name
