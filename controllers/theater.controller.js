@@ -155,7 +155,7 @@ exports.addMovieToTheater = async (req,res) => {
             });
         }else {
             movieIds.forEach(movie => {
-                theater.movies =  theater.movies.filter(dataId => dataId!=movie)
+                theater.movies =  theater.movies.filter(id => id!=movie)
             });
         }
         await theater.save()
