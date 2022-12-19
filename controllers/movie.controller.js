@@ -39,9 +39,9 @@ exports.movieFilter = async (req,res)=>{
         }
     }
     try{
-        const finded = await MOVIE.find(find)
+        const movie = await MOVIE.find(find)
         return res.status(200).send({
-            Movies : finded
+            Movies : movie
         })
     }catch(err){
         console.log(err.message)
@@ -56,7 +56,7 @@ exports.updateMovie = async (req,res)=>{
     try{ 
         const movie = await MOVIE.findOne({_id:id})
         if(!movie){
-            return res.status(400).send({
+            return res.status(404).send({
                 message:"Movie does not exists!"
             })
         }
@@ -88,7 +88,7 @@ exports.updateMovie = async (req,res)=>{
             movie.trailerVideo = body.trailerVideo
         }
        await movie.save()
-       return res.status(201).send({
+       return res.status(200).send({
         message:"movie update successfully!"
     })
     }catch(err){
@@ -103,11 +103,11 @@ exports.deleteMovie = async (req,res)=>{
     try{
         const movie = await MOVIE.findOneAndDelete({_id:id});
         if(!movie){
-            return res.status(400).send({
+            return res.status(404).send({
                 message:"movie already deleted!"
             })
         }
-        return res.status(201).send({
+        return res.status(200).send({
             message:"movie deleted successfully!"
         })
     }catch(err){
@@ -117,10 +117,11 @@ exports.deleteMovie = async (req,res)=>{
         })
     }
 }
-const createMovie = async (data)=>{
-    for(let i=0;i<data.length;i++){
-        await MOVIE.create(data[i])
-    }
-    console.log('fake movie created')
-}
+//----------------------uncomment id need seed data -------------------
+// const createMovie = async (data)=>{
+//     for(let i=0;i<data.length;i++){
+//         await MOVIE.create(data[i])
+//     }
+//     console.log('fake movie created')
+// }
 // createMovie(movieSeed.fakeMovie)
