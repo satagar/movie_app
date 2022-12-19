@@ -413,7 +413,7 @@ describe('movie delete test',()=>{
       expect(res.status).toHaveBeenCalledWith(404)
       expect(res.send).toHaveBeenCalledWith(
         expect.objectContaining({
-            message:"movie already deleted!"
+            message:"movie does not exists!"
         })
       )
     

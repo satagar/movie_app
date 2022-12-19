@@ -104,7 +104,7 @@ exports.deleteMovie = async (req,res)=>{
         const movie = await MOVIE.findOneAndDelete({_id:id});
         if(!movie){
             return res.status(404).send({
-                message:"movie already deleted!"
+                message:"movie does not exists!"
             })
         }
         return res.status(200).send({

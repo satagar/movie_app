@@ -16,7 +16,7 @@ const theaterSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    moviesId: {
+    movies: {
         type: [mongoose.SchemaTypes.ObjectId],
         ref: 'movies'
     },

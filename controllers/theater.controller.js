@@ -76,7 +76,9 @@ exports.updateTheater = async (req, res) => {
     const body = req.body
     const id = req.params.id
     try {
-        const theater = await THEATER.findOne({_id: id})
+        const theater = await THEATER.findOne({
+            _id: id
+        })
         if (!theater) {
             return res.status(404).send({
                 message: "Theater  does not exists!",
@@ -97,7 +99,7 @@ exports.updateTheater = async (req, res) => {
         await theater.save()
         return res.status(200).send({
             message: "Theater updated successfully!",
-            Updated_theater : theater
+            Updated_theater: theater
         })
     } catch (err) {
         console.log(err.message)
@@ -114,7 +116,9 @@ exports.deleteTheater = async (req, res) => {
         })
     }
     try {
-        const theater = await THEATER.findOneAndDelete({_id: id})
+        const theater = await THEATER.findOneAndDelete({
+            _id: id
+        })
         if (!theater) {
             return res.status(404).send({
                 message: "Theater does not exists for delete.",
@@ -122,7 +126,7 @@ exports.deleteTheater = async (req, res) => {
         }
         return res.status(200).send({
             message: "Theater deleted successfully!",
-            deleted_theater : theater
+            deleted_theater: theater
         })
     } catch (err) {
         console.log(err.message)
@@ -131,10 +135,40 @@ exports.deleteTheater = async (req, res) => {
         })
     }
 }
-const createFakeTheater = async (data) => {
-    for (let i = 0; i < data.length; i++) {
-        await THEATER.create(data[i])
+
+exports.addMovieToTheater = async (req,res) => {
+    const theaterId = req.params.id
+    const movieIds = req.body.movieId
+    const insert = req.body.insert
+    if (!theaterId || !movieIds) {
+        return res.status(400).send({
+            message: 'bad request!'
+        })
     }
-    console.log('created successfully!')
+    try {
+        const theater = await THEATER.findOne({
+            _id: theaterId
+        })
+        if (insert) {
+            movieIds.forEach(movie => {
+                theater.movies.push(movie)
+            });
+        }
+        await theater.save()
+        return res.status(200).send({
+            Updated_Theater: theater
+        })
+    } catch (err) {
+        console.log(err.message)
+        return res.status(500).send({
+            message: "Internal server error!"
+        })
+    }
 }
+// const createFakeTheater = async (data) => {
+//     for (let i = 0; i < data.length; i++) {
+//         await THEATER.create(data[i])
+//     }
+//     console.log('created successfully!')
+// }
 // createFakeTheater(fakeTheater.theater)
