@@ -169,6 +169,25 @@ exports.addMovieToTheater = async (req,res) => {
         })
     }
 }
+exports.getTheaterByMovie =  async (req,res)=>{
+    const movieId = req.params.movieId
+    if(!movieId){
+        return res.status(400).send({
+            message: "bad request!"
+        })
+    }
+    try { 
+          const theater = await THEATER.find({movies:movieId})        
+          return res.status(200).send({
+            Theaters : theater
+          })  
+    }catch (err) {
+        console.log(err.message)
+        return res.status(500).send({
+            message: "Internal server error!"
+        })
+    }
+}
 // const createFakeTheater = async (data) => {
 //     for (let i = 0; i < data.length; i++) {
 //         await THEATER.create(data[i])

@@ -15,5 +15,6 @@ route.get('/theater/filter',theaterController.getTheaterByAllFileds)
 route.put('/theater/update/:id',theaterController.updateTheater)
 route.delete('/theater/delete/:id',theaterController.deleteTheater)
 route.put('/theater/:id/movies',theaterController.addMovieToTheater)
+route.get('/theaters/:movieId',theaterController.getTheaterByMovie)
 
 module.exports = route;
