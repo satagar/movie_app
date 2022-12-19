@@ -38,24 +38,22 @@ const theaterSchema = mongoose.Schema({
         default: false
     },
     shows: {
-        type: [
-            {
-                movie: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'movie'
-                },
-                language: String,
-                timings: [
-                    {
-                        date: Date,
-                        hour: Number,
-                        minute: Number,
-                        ticketPrice: Number,
-                        screen: Number
-                    }
-                ]
-            }
-        ]
+        type: [{
+            movie: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'movie'
+            },
+            language: String,
+            timings: [
+                {
+                    date: Date,
+                    hour: Number,
+                    minute: Number,
+                    ticketPrice: Number,
+                    screen: Number
+                }
+            ]
+        }]
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
