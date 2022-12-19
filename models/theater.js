@@ -86,7 +86,7 @@ const theaterSchema = mongoose.Schema({
             for(id of movieIds) {
                 if(isObjectId(id) && await Movie.findById(id)) {
                     const index = this.movies.findIndex(m => m === id);
-                    this.movies.splice(index, 1);
+                    if(index >= 0) this.movies.splice(index, 1);
                 }
                 else {
                     throw new Error(`${id} is not a valid movie id`);
