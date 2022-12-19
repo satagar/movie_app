@@ -117,8 +117,8 @@ module.exports = {
         handleValidation
     ],
     theaterSetMovies: [
-        check('movieIds').trim().escape().not().isEmpty().withMessage('Movie IDs cannot be empty').bail().isArray().withMessage('Movie IDs must be an array').bail(),
-        check('insert').trim().escape().not().isEmpty().withMessage('Insert cannot be empty').bail().isBoolean().withMessage('Movie IDs must be a boolean').bail(),
+        check('movieIds').not().isEmpty().withMessage('Movie IDs cannot be empty').bail().isArray().withMessage('Movie IDs must be an array').bail(),
+        check('insert').not().isEmpty().withMessage('Insert cannot be empty').bail().isBoolean().withMessage('Insert must be a boolean').bail(),
         handleValidation
     ]
 }
