@@ -54,40 +54,40 @@ exports.updateMovie = async (req,res)=>{
     const id = req.params.id
     const body = req.body;
     try{ 
-        const find = await MOVIE.findOne({_id:id})
-        if(!find){
+        const movie = await MOVIE.findOne({_id:id})
+        if(!movie){
             return res.status(400).send({
                 message:"Movie does not exists!"
             })
         }
         if(body.name){
-            find.name = body.name
+            movie.name = body.name
         }
         if(body.description){
-            find.description = body.description
+            movie.description = body.description
         }
         if(body.releaseDate){
-            find.releaseDate = body.releaseDate
+            movie.releaseDate = body.releaseDate
         }
         if(body.releaseStatus){
-            find.releaseStatus = body.releaseStatus
+            movie.releaseStatus = body.releaseStatus
         }
         if(body.director){
-            find.director = body.director
+            movie.director = body.director
         }
         if(body.language){
-            find.language = body.language
+            movie.language = body.language
         }
         if(body.movieImage){
-            find.movieImage = body.movieImage
+            movie.movieImage = body.movieImage
         }
         if(body.price){
-            find.price = body.price
+            movie.price = body.price
         }
         if(body.trailerVideo){
-            find.trailerVideo = body.trailerVideo
+            movie.trailerVideo = body.trailerVideo
         }
-       await find.save()
+       await movie.save()
        return res.status(201).send({
         message:"movie update successfully!"
     })

@@ -38,7 +38,7 @@ exports.getTheaterById = async (req, res) => {
                 message: "theater does not exists!"
             })
         }
-        return res.status(201).send({
+        return res.status(200).send({
             Theater: theater
         })
     } catch (err) {
@@ -51,18 +51,18 @@ exports.getTheaterById = async (req, res) => {
 exports.getTheaterByAllFileds = async (req, res) => {
     const query = req.query
     const queryData = {}
-    if (name) {
+    if (query.name) {
         queryData.name = query.name
     }
-    if (city) {
-        queryData.city = query, city
+    if (query.city) {
+        queryData.city = query.city
     }
-    if (pincode) {
+    if (query.pincode) {
         queryData.pincode = query.pincode
     }
     try {
         const theater = await THEATER.findOne(queryData)
-        return res.status(201).send({
+        return res.status(200).send({
             Theater: theater
         })
     } catch (err) {
