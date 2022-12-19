@@ -149,9 +149,17 @@ exports.addMovieToTheater = async (req,res) => {
         const theater = await THEATER.findOne({
             _id: theaterId
         })
-        if (insert) {
+        if (insert==true) {
             movieIds.forEach(movie => {
                 theater.movies.push(movie)
+            });
+        }
+        if (insert==false) {
+            movieIds.forEach(movie => {
+               const index =  theater.movies.indexOf(movie)
+                  if(index){
+                        theater.movies.splice(index,1)
+                  }
             });
         }
         await theater.save()
