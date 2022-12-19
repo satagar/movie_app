@@ -153,13 +153,9 @@ exports.addMovieToTheater = async (req,res) => {
             movieIds.forEach(movie => {
                 theater.movies.push(movie)
             });
-        }
-        if (insert==false) {
+        }else {
             movieIds.forEach(movie => {
-               const index =  theater.movies.indexOf(movie)
-                  if(index){
-                        theater.movies.splice(index,1)
-                  }
+                theater.movies =  theater.movies.filter(dataId => dataId!=movie)
             });
         }
         await theater.save()
