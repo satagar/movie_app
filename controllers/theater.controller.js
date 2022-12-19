@@ -208,13 +208,11 @@ exports.MovieInsideTheTheater = async (req,res)=>{
                 message: "Theater does not exists!"
             })
          }
-         const movie = theater.movies.filter(id => id==movieId)
-         if(!movie[0]){
+         if(!theater.movies.includes(movieId)){
             return res.status(404).send({
                 message: "Movie not runing in theater."
             })
          }
-         console.log(movie)
          return res.status(200).send({
             Movie_Runing_in_theater : theater
           })  
