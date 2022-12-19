@@ -72,7 +72,7 @@ const theaterSchema = mongoose.Schema({
         facilities: facilities
     },
     methods: {
-        addMovies(movieIds) {
+        async addMovies(movieIds) {
             for(id of movieIds) {
                 if(isObjectId(id) && await Movie.findById(id)) {
                     this.movies.push(id);
@@ -82,7 +82,7 @@ const theaterSchema = mongoose.Schema({
                 }
             }
         },
-        removeMovies(movieIds) {
+        async removeMovies(movieIds) {
             for(id of movieIds) {
                 if(isObjectId(id) && await Movie.findById(id)) {
                     const index = this.movies.findIndex(m => m === id);
@@ -92,8 +92,7 @@ const theaterSchema = mongoose.Schema({
                     throw new Error(`${id} is not a valid movie id`);
                 }
             }
-        },
-
+        }
     }
 });
 

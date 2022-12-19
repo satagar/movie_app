@@ -7,6 +7,7 @@ const crewSeeder = require("./crew.seeder");
 const clientSeeder = require("./client.seeder");
 const customerSeeder = require("./customer.seeder");
 const reviewSeeder = require("./review.seeder");
+const theaterSeeder = require("./theater.seeder");
 
 let exitAfterSeeding = false;
 
@@ -20,6 +21,7 @@ module.exports = {
             await movieSeeder.seed(10);
             await clientSeeder.seed(10);
             await customerSeeder.seed(25);
+            await theaterSeeder.seed(25);
         }).catch(err => console.log(`Failed to run seeders because:\n${err}`));
         if(exitAfterSeeding) process.exit();
     }
