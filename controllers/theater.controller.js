@@ -177,7 +177,12 @@ exports.getTheaterByMovie =  async (req,res)=>{
         })
     }
     try { 
-          const theater = await THEATER.find({movies:movieId})        
+          const theater = await THEATER.find({movies:movieId})       
+          if(!theater){
+            return res.status(404).send({
+                message: "Theater does not exists!"
+            })
+         } 
           return res.status(200).send({
             Theaters : theater
           })  
@@ -197,7 +202,19 @@ exports.MovieInsideTheTheater = async (req,res)=>{
         })
     }
     try {
-         const theater = await THEATER.findOne({_id:theaterId,movies:movieId})
+         const theater = await THEATER.findOne({_id:theaterId})
+         if(!theater){
+            return res.status(404).send({
+                message: "Theater does not exists!"
+            })
+         }
+         const movie = theater.movies.filter(id => id==movieId)
+         if(!movie[0]){
+            return res.status(404).send({
+                message: "Movie not runing in theater."
+            })
+         }
+         console.log(movie)
          return res.status(200).send({
             Movie_Runing_in_theater : theater
           })  
