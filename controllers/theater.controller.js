@@ -188,6 +188,26 @@ exports.getTheaterByMovie =  async (req,res)=>{
         })
     }
 }
+exports.MovieInsideTheTheater = async (req,res)=>{
+    const movieId = req.params.movieId
+    const theaterId = req.params.theaterId
+    if(!movieId || !theaterId){
+        return res.status(400).send({
+            message: "bad request!"
+        })
+    }
+    try {
+         const theater = await THEATER.findOne({_id:theaterId,movies:movieId})
+         return res.status(200).send({
+            Movie_Runing_in_theater : theater
+          })  
+    }catch (err) {
+        console.log(err.message)
+        return res.status(500).send({
+            message: "Internal server error!"
+        })
+    }
+}
 // const createFakeTheater = async (data) => {
 //     for (let i = 0; i < data.length; i++) {
 //         await THEATER.create(data[i])
