@@ -63,10 +63,26 @@ const destroy = async (req, res) => {
     else handleNotFoundResponse(res);
 }
 
+const setMovies = async (req, res) => {
+    if(!isObjectId(req.params.id)) handleNotFoundResponse(res, 'Invalid ID');
+    const data = await Theater.findOne({ _id: req.params.id, owner: req.user.id }).catch(error => handleServerErrorResponse(res, error));
+    if(data) {
+        if(req.body.insert) data.addMovies(req.body.movieIds);
+        else data.removeMovies(req.body.movieIds);
+        if(data.isModified()) {
+            const saved = await data.save().catch(error => handleServerErrorResponse(res, error));
+            if(saved) res.status(200).json(data);
+        }
+        else res.status(200).json(data);
+    }
+    else handleNotFoundResponse(res);
+}
+
 module.exports = {
     index,
     create,
     read,
     update,
-    destroy
+    destroy,
+    setMovies
 }

@@ -51,6 +51,9 @@ apiRouterSecure.route('/theaters/:id')
     .put(authorizeRoles(['admin', 'client']), validator.theaterUpdate, theaterController.update)
     .delete(authorizeRoles(['admin', 'client']), theaterController.destroy);
 
+apiRouterSecure.route('/theaters/:id/movies')
+    .put(authorizeRoles(['client']), validator.theaterSetMovies, theaterController.setMovies)
+
 module.exports = {
     apiRouter: apiRouter, 
     apiRouterSecure: apiRouterSecure

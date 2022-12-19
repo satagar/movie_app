@@ -1,5 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const slug = require("mongoose-slug-generator");
+const { Movie } = require(".");
+const { isObjectId } = require("../helpers");
 
 const facilities = ['FOOD_COURT', 'WIFI', 'PARKING'];
 
@@ -37,6 +39,10 @@ const theaterSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    movies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'movie'
+    }],
     shows: {
         type: [{
             movie: {
@@ -65,6 +71,30 @@ const theaterSchema = mongoose.Schema({
     statics: {
         facilities: facilities
     },
+    methods: {
+        addMovies(movieIds) {
+            for(id of movieIds) {
+                if(isObjectId(id) && await Movie.findById(id)) {
+                    this.movies.push(id);
+                }
+                else {
+                    throw new Error(`${id} is not a valid movie id`);
+                }
+            }
+        },
+        removeMovies(movieIds) {
+            for(id of movieIds) {
+                if(isObjectId(id) && await Movie.findById(id)) {
+                    const index = this.movies.findIndex(m => m === id);
+                    this.movies.splice(index, 1);
+                }
+                else {
+                    throw new Error(`${id} is not a valid movie id`);
+                }
+            }
+        },
+
+    }
 });
 
 module.exports = mongoose.model("Theater", theaterSchema);
