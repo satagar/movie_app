@@ -23,5 +23,7 @@ router.get("/movie_app/api/v1/theatres/:city", theatreController.getByCity);
 router.put("/movie_app/api/v1/theatres/:id", theatreController.update);
 router.delete("/movie_app/api/v1/theatres/:id", theatreController.delete);
 
+//---------------------Theatre and Movie combined routes-----------------------------
+router.get("/movie_app/api/v1/theatres/:id/movies", theatreMovieController.addMovieToTheatre);
 
 module.exports = router;
