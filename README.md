@@ -1,1 +1,1 @@
-# movie_app
+# movie booking application
