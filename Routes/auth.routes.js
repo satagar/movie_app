@@ -5,7 +5,8 @@ const movieController = require("../Controllers/movie.controller")
 const authController = require("../Controllers/auth.controller")
 
 const validateTheatre = require("../Utilis/validate.theatre");
-const theatreController = require("../Controllers/theatre.controller")
+const theatreController = require("../Controllers/theatre.controller");
+const theatreMovieController = require("../Controllers/theatreMovie.controller")
 
 //-------------------------User ------------------------------------
 router.post("/movie_app/api/v1/auth/signup", authController.signUp);
@@ -24,6 +25,9 @@ router.put("/movie_app/api/v1/theatres/:id", theatreController.update);
 router.delete("/movie_app/api/v1/theatres/:id", theatreController.delete);
 
 //---------------------Theatre and Movie combined routes-----------------------------
-router.get("/movie_app/api/v1/theatres/:id/movies", theatreMovieController.addMovieToTheatre);
+router.put("/movie_app/api/v2/theatres/:id/movies", theatreMovieController.addMovieToTheatre);
+router.get("/movie_app/api/v1/theatres/:movieId", theatreMovieController.findTheatreByMovies); // Not Working
+router.get("/movie_app/api/v2/theatres", theatreMovieController.getAllTheatres); //use /theatre?movieId=id for searching theatre by movieId
+router.get("/movie_app/api/v2/theatres/:theatreId/movies/:movieId", theatreMovieController.checkMovieInsideATheatre);
 
 module.exports = router;
