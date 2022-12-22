@@ -45,7 +45,9 @@ exports.getById = async(req, res) => {
 
 exports.getByPincode = async(req, res) => {
     try {
-        const theatre = await Theatre.findOne({ pincode: req.query.pincode });
+        const pincodeId = req.query.pincode
+        const theatre = await Theatre.find();
+        theatre = theatre.pincode.filter(t => { t.pincode.includes(pincodeId) });
         res.status(200).send(theatre)
     } catch (error) {
         console.log(error);
@@ -88,17 +90,17 @@ exports.update = async(req, res) => {
 
 exports.delete = async(req, res) => {
     try {
-        const theatre = await Theatre.find({ _id: req.params.id });
-        if (theatre) {
-            const deleteTheatre = await Theatre.deleteOne({ _id: req.params.id });
-            res.status(200).send({
-                message: 'Deleted Theatre Details Successfully'
-            })
-        } else {
+        const theatre = await Theatre.findOneAndDelete({ _id: req.params.id });
+        if (!theatre) {
             return res.status(404).send({
                 message: "Theatre Not Found!"
             })
         }
+        await theatre.save();
+        res.status(200).send({
+            message: 'Deleted Theatre Details Successfully'
+        })
+
     } catch (error) {
         console.log(error);
         return res.status(500).send({
