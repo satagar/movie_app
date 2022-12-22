@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema({
         default:"CUSTOMER",
         enum:["CUSTOMER","CLIENT","ADMIN"]
     },
+    userStatus :{
+        type:String,
+        default:"APPROVED",
+        enum:["APPROVED","PENDING","BLOCK"]
+    },
     createdAt:{
         type:String,
         default:()=>{

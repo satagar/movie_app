@@ -1,5 +1,7 @@
 const USER  = require('../models/user.model');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const secretKey = require('../configs/scretKey')
 
 exports.signup = async (req,res)=>{
     const body = req.body;
@@ -24,4 +26,42 @@ exports.signup = async (req,res)=>{
                 message:"Internal server error! Try after some time."
             })
         }
+    }
+
+    exports.signin = async (req,res)=>{
+            const body = req.body;
+            try {
+                  const user = await USER.findOne({email:body.email});
+                  if(!user){
+                    return res.status(404).send({
+                        message:"User does not exists.",
+                    })
+                  }
+                  if(user.userStatus!=='APPROVED'){
+                    return res.status(200).send({
+                        message:`Can't allow login as user
+                        is in statuts : [ ${user.userStatus}] `,
+                    })
+                  }
+                  const isValiedPassword = bcrypt.compareSync(body.password,user.password);
+                  if(!isValiedPassword){
+                    return res.status(401).send({
+                        message:`Invalied Password! `,
+                    })
+                  }else{
+                      const token = jwt.sign({userId:user.userId},secretKey.scretKey,{
+                        expiresIn:'1d'
+                      })
+                      return res.status(200).send({
+                        message:"User  login Successfully!",
+                        accessToken : token
+                      })
+                  }
+                  
+            }catch (err) {
+                console.log(err.message);
+                return res.status(500).send({
+                    message:"Internal server error! Try after some time."
+                })
+            }
     }
