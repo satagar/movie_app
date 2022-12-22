@@ -28,11 +28,17 @@ const user = new mongoose.Schema({
 
     role: {
         type: String,
-        enum: ['CUSTOMER', 'ADMIN', 'THEATRE'],
+        enum: ['CUSTOMER', 'ADMIN', 'CLIENT'],
         default: 'CUSTOMER',
         required: true
     },
 
+    userStatus: {
+        type: String,
+        enum: ['PENDING', 'APPROVED'],
+        default: "APPROVED",
+        required: true
+    },
 
     createdAt: {
         type: Date,

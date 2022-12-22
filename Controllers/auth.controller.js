@@ -3,7 +3,15 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../Configs/config.secret");
 
-exports.signUp = async(req, res) => {
+exports.signup = async(req, res) => {
+
+    const role = req.body.role;
+    let userStatus = req.body.userStatus;
+    if (role == "CUSTOMER" || role == "ADMIN") {
+        userStatus = "APPROVED";
+    } else {
+        userStatus = "PENDING";
+    }
 
     userObj = {
         name: req.body.name,
@@ -14,8 +22,18 @@ exports.signUp = async(req, res) => {
     }
 
     try {
-        const user = User.create(userObj)
-        return res.status(201).send(user);
+        const user = await User.create(userObj)
+        console.log(user);
+        const userResp = {
+            name: user.name,
+            userId: user.userId,
+            emailId: user.emailId,
+            role: user.role,
+            userStatus: user.userStatus,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        };
+        return res.status(201).send(userResp);
     } catch (error) {
         console.log(error);
         return res.status(500).send({
@@ -37,6 +55,11 @@ exports.login = async(req, res) => {
                 message: "User Not found!"
             })
         }
+        if (user.userStatus != "APPROVED") {
+            return res.status(200).send({
+                message: "User Not Allowed to Login"
+            })
+        }
 
         var validatePassword = bcrypt.compareSync(
             req.body.password,
@@ -45,6 +68,7 @@ exports.login = async(req, res) => {
 
         if (!validatePassword) {
             return res.status(401).send({
+                accessToken: null,
                 message: 'Invalid Password'
             })
         }
@@ -58,6 +82,7 @@ exports.login = async(req, res) => {
             userId: user.userId,
             emailId: user.emailId,
             role: user.role,
+            userStatus: user.userStatus,
             accessToken: token
         }
 
