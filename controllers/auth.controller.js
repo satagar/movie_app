@@ -40,7 +40,7 @@ exports.signup = async (req,res)=>{
                   if(user.userStatus!=='APPROVED'){
                     return res.status(200).send({
                         message:`Can't allow login as user
-                        is in statuts : [ ${user.userStatus}] `,
+                        is in status : [ ${user.userStatus}] `,
                     })
                   }
                   const isValiedPassword = bcrypt.compareSync(body.password,user.password);

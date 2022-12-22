@@ -22,6 +22,4 @@ route.get('/theaters/:theaterId/movies/:movieId',theaterController.MovieInsideTh
 //-----------------------------------------Authentication Routes -------------------------------
 route.post('/user/signup',authMiddleware.authBodyValidate,authController.signup)
 route.post('/user/signin',authMiddleware.isValiedBodyForSignin,authController.signin)
-
-
 module.exports = route;
