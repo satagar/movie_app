@@ -30,6 +30,16 @@ const userSchema = new mongoose.Schema({
         default: () => {
             return Date.now()
         }
+    },
+    userType: {
+        type: String,
+        required: true,
+        default: "customer"
+    },
+    userStatus: {
+        type: String,
+        required: true,
+        default: "approved"
     }
 })
 
