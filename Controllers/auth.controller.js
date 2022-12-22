@@ -51,7 +51,7 @@ exports.login = async(req, res) => {
         }).exec();
 
         if (!user) {
-            return res.status(400).send({
+            return res.status(404).send({
                 message: "User Not found!"
             })
         }
