@@ -19,16 +19,20 @@ const theatreSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        required: true,
-        immutable: true,
+        immutable: true,  
+        default: () => {
+            return Date.now();
+        }
     },
     updatedAt: {
         type: Date,
-        required: true,
-        immutable: false,
         default: () => {
-            return Date.now()
+            return Date.now();
         }
+    },
+    movies : {
+        type : [mongoose.SchemaTypes.ObjectId],
+        ref : "Movie"
     }
 })
 

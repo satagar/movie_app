@@ -6,11 +6,11 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Description: {
+    description: {
         type: String,
         required: true
     },
-    ReleaseDate: {
+    releaseDate: {
         type: Date,
         required: true,
         immutable: true
@@ -33,13 +33,26 @@ const movieSchema = new mongoose.Schema({
         type: String,
         URL: ''
     },
-    trailorURL: {
+    trailerURL: {
         type: String,
         URL: ''
     },
     cast: {
         type: String,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        immutable: true,
+        default: Date.now()
+    },
+    updatedAt: {
+        type: Date,
+        required: true,
+        default: () => {
+            return Date.now()
+        }
     }
 })
 
