@@ -78,3 +78,11 @@ exports.deleteTheatre = async (req, res) => {
         message: "Deleted the theatre ${deletedTheatre}"
     })
 }
+
+exports.addMoviesToATheater = async (req, res) => {
+
+}
+
+exports.checkMovieInsideATheatre = async (req, res) => {
+
+}
