@@ -43,10 +43,10 @@ exports.signup = async (req,res)=>{
                         is in status : [ ${user.userStatus}] `,
                     })
                   }
-                  const isValiedPassword = bcrypt.compareSync(body.password,user.password);
-                  if(!isValiedPassword){
+                  const isValidPassword = bcrypt.compareSync(body.password,user.password);
+                  if(!isValidPassword){
                     return res.status(401).send({
-                        message:`Invalied Password! `,
+                        message:`Invalid Password! `,
                     })
                   }else{
                       const token = jwt.sign({userId:user.userId},secretKey.scretKey,{
@@ -65,3 +65,25 @@ exports.signup = async (req,res)=>{
                 })
             }
     }
+
+exports.UpdatePassword = async (req,res)=>{
+          const body = req.body;
+          try {
+                 const user = await USER.findOne({userId:req.userId})
+                 if(!user){
+                    return res.status(404).send({
+                        message:"User does not exists.",
+                    })
+                  }
+                 user.password = bcrypt.hashSync(body.password,10)
+                 await user.save();
+                 return res.status(200).send({
+                     message:"user password update successfully."
+                 })
+          }catch (err) {
+            console.log(err.message);
+            return res.status(500).send({
+                message:"Internal server error! Try after some time."
+            })
+        }
+}

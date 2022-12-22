@@ -6,6 +6,7 @@ const theaterMiddleware = require('../../../middleware/theaterValidate.middlewar
 const theaterController = require('../../../controllers/theater.controller')
 const authController = require('../../../controllers/auth.controller')
 const authMiddleware = require('../../../middleware/authValidate.middleware')
+//------------------------------------------Movie routes---------------------------------------------
 route.post('/movie/create',movieMiddleware.movieValidate,movieController.createMovies)
 route.get('/movie/filter',movieController.movieFilter)
 route.put('/movie/update/:id',movieController.updateMovie)
@@ -21,5 +22,6 @@ route.get('/theaters/:movieId',theaterController.getTheaterByMovie)
 route.get('/theaters/:theaterId/movies/:movieId',theaterController.MovieInsideTheTheater)
 //-----------------------------------------Authentication Routes -------------------------------
 route.post('/user/signup',authMiddleware.authBodyValidate,authController.signup)
-route.post('/user/signin',authMiddleware.isValiedBodyForSignin,authController.signin)
+route.post('/user/signin',authMiddleware.isValidBodyForSignin,authController.signin)
+route.put('/user/update-password',authMiddleware.updateValidation,authMiddleware.isAuthorized,authController.UpdatePassword);
 module.exports = route;
