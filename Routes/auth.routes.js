@@ -3,15 +3,17 @@ const router = express.Router();
 const validateMovie = require("../Utilis/validate.movie")
 const movieController = require("../Controllers/movie.controller")
 const authController = require("../Controllers/auth.controller")
+const validate = require("../Utilis/validateToken")
+const updateController = require("../Controllers/auth.update.controller")
 
 const validateTheatre = require("../Utilis/validate.theatre");
 const theatreController = require("../Controllers/theatre.controller");
 const theatreMovieController = require("../Controllers/theatreMovie.controller")
 
 //-------------------------User ------------------------------------
-router.post("/movie_app/api/v1/auth/signup", authController.signUp);
+router.post("/movie_app/api/v1/auth/signup", authController.signup);
 router.post("/movie_app/api/v1/auth/login", authController.login);
-
+router.put("/movie_app/api/v1/users", validate.validateToken, updateController.update)
 
 //--------------------Movie routes ---------------------------------
 router.post("/movie_app/api/v1/movies", validateMovie.movieValidate, movieController.movieCreation);
