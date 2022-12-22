@@ -3,4 +3,9 @@ const usertype = {
     "CLIENT":"CLIENT",
     "ADMIN":"ADMIN"
 }
-module.exports = usertype;
+const userStatus = {
+    "APPROVED":"APPROVED",
+    "PENDING":"PENDING",
+    "BLOCK":"BLOCK"
+}
+module.exports = {usertype,userStatus};

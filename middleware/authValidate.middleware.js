@@ -1,5 +1,6 @@
 const userTypeValidate = require('../utils/constant')
 const jwt = require('jsonwebtoken')
+const USER = require('../models/user.model')
 const key = require('../configs/scretKey')
 exports.authBodyValidate = (req, res, next) => {
     const body = req.body;
@@ -9,12 +10,12 @@ exports.authBodyValidate = (req, res, next) => {
         })
     }
     if(body.userType){
-        if(!userTypeValidate[body.userType.toUpperCase()]){
+        if(!userTypeValidate.usertype[body.userType.toUpperCase()]){
             return res.status(400).send({
                 message: "Invalied userType ,  Bad Request."
             })
         }
-        body.userType = userTypeValidate[body.userType.toUpperCase()];
+        body.userType = userTypeValidate.usertype[body.userType.toUpperCase()];
     }
     next()
 }
@@ -51,4 +52,21 @@ exports.isAuthorized = (req,res,next)=>{
            req.userId = decodedId.userId
            next();
    })
+}
+exports.isAdmin =async (req,res,next)=>{
+    try {
+            const user = await USER.findOne({userId:req.userId});
+            if(user && user.userType=='ADMIN'){
+                 next()
+            }else{
+                    return res.status(403).send({
+                        message:"Require Admin Role!"
+                    })
+            }
+    }catch(err){
+        console.log(err.message);
+        return res.status(500).send({
+            message:"Internal server error. please try after some time."
+        })
+    }
 }

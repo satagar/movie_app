@@ -24,4 +24,5 @@ route.get('/theaters/:theaterId/movies/:movieId',theaterController.MovieInsideTh
 route.post('/user/signup',authMiddleware.authBodyValidate,authController.signup)
 route.post('/user/signin',authMiddleware.isValidBodyForSignin,authController.signin)
 route.put('/user/update-password',authMiddleware.updateValidation,authMiddleware.isAuthorized,authController.UpdatePassword);
+route.put('/users/update/:id',authMiddleware.isAuthorized,authMiddleware.isAdmin,authController.updateUser)
 module.exports = route;
