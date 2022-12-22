@@ -4,6 +4,8 @@ const movieController = require('../../../controllers/movie.controller')
 const movieMiddleware  =require('../../../middleware/movieValidation.middleware')
 const theaterMiddleware = require('../../../middleware/theaterValidate.middleware')
 const theaterController = require('../../../controllers/theater.controller')
+const authController = require('../../../controllers/auth.controller')
+const authMiddleware = require('../../../middleware/authValidate.middleware')
 route.post('/movie/create',movieMiddleware.movieValidate,movieController.createMovies)
 route.get('/movie/filter',movieController.movieFilter)
 route.put('/movie/update/:id',movieController.updateMovie)
@@ -17,6 +19,8 @@ route.delete('/theater/delete/:id',theaterController.deleteTheater)
 route.put('/theater/:id/movies',theaterController.addMovieToTheater)
 route.get('/theaters/:movieId',theaterController.getTheaterByMovie)
 route.get('/theaters/:theaterId/movies/:movieId',theaterController.MovieInsideTheTheater)
+//-----------------------------------------Authentication Routes -------------------------------
+route.post('/user/signup',authMiddleware.authBodyValidate,authController.signup)
 
 
 module.exports = route;
