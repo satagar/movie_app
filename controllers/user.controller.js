@@ -1,6 +1,9 @@
 const userModel = require('../models/user.model')
 const constants = require('../constants/user.constants')
 const { userType, userStatus } = require('../constants/user.constants')
+const bcrypt = require('bcryptjs')
+const config = require('../configs/auth.config')
+const jwt = require('jsonwebtoken')
 
 exports.signUp = async (req, res) => {
 
@@ -63,7 +66,14 @@ exports.validatePassword = async (req, res) => {
             accessToken: null,
             message: "Invalid Password!"
         });
-    } else {
-        return res.status(200).send(passwordIsValid)
     }
+
+    var token = jwt.sign({ userId: userModel.userId }, config.secret_key)
+    res.status(200).send({
+        name: userModel.name,
+        userId: userModel.userId,
+        email: userModel.email,
+        userType: userModel.userType,
+        userStatus: userModel.userStatus
+    })
 }
