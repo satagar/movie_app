@@ -1,25 +1,33 @@
 const THEATER = require('../models/theater.model')
-exports.theaterReqBodyValidate = (req, res, next) => {
+exports.theaterReqBodyValidate =async (req, res, next) => {
     const body = req.body
     if (!body.name) {
         return res.status(400).send({
-            message: "Name is required!"
+            message: "Name is required , Bad Request!"
         })
     }
     if (!body.description) {
         return res.status(400).send({
-            message: "Description is required!"
+            message: "Description is required , Bad Request!"
         })
     }
     if (!body.city) {
         return res.status(400).send({
-            message: "City is required!"
+            message: "City is required , Bad Request!"
         })
     }
     if (!body.pincode) {
         return res.status(400).send({
-            message: "Pincode is required!"
+            message: "Pincode is required , Bad Request!"
         })
+    }
+    if(body.pincode){
+        const theater = await THEATER.findOne({name:body.name,pincode:body.pincode})
+        if(theater){
+            return res.status(400).send({
+                message: "Theater is already exists , Bad Request!"
+            })
+        }
     }
     next()
 }
