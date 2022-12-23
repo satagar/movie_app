@@ -33,7 +33,7 @@ router.get("/movie_app/api/v1/theatres", theatreController.getAlltheatres);
 router.get("/movie_app/api/v1/theatres/:id", theatreController.getById);
 router.get("/movie_app/api/v1/theatres/:pincode", theatreController.getByPincode);
 router.get("/movie_app/api/v1/theatres/:city", theatreController.getByCity);
-router.put("/movie_app/api/v1/theatres/:id", theatreController.update);
+router.put("/movie_app/api/v1/theatres/:id", validateTheatre.theatreValidate, theatreController.update);
 router.delete("/movie_app/api/v1/theatres/:id", theatreController.delete);
 
 

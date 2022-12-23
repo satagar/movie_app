@@ -1,3 +1,5 @@
+const Theatre = require("../Models/theatre.model")
+
 exports.theatreValidate = async(req, res, next) => {
     const body = req.body;
 
@@ -23,6 +25,13 @@ exports.theatreValidate = async(req, res, next) => {
     if (!body.pincode) {
         return res.status(400).send({
             message: " Theatre pincode is required!"
+        })
+    }
+
+    const theatre = await Theatre.findOne({ name: req.body.name, pincode: req.body.pincode })
+    if (theatre) {
+        return res.status(400).send({
+            message: "Must have Different theatres at similar Location"
         })
     }
 
