@@ -88,5 +88,17 @@ describe('test middleware of auth middleware',()=>{
                 })
             )
          })
-       
+         it('should pass',async ()=>{
+            //arrange
+            const req = mockRequest()
+            const res = mockResponse()
+            userPayload.name = "test";
+            userPayload.email = "test@gamil.com"
+            userPayload.password = "test";
+             req.body=userPayload;
+             const nextSpy = jest.fn()
+            //act
+            await authMiddleware.authBodyValidate(req,res,nextSpy)
+            //asserts
+         })
 })

@@ -20,12 +20,11 @@ exports.theaterReqBodyValidate =async (req, res, next) => {
         return res.status(400).send({
             message: "Pincode is required , Bad Request!"
         })
-    }
-    if(body.pincode){
+    }else {
         const theater = await THEATER.findOne({name:body.name,pincode:body.pincode})
         if(theater){
             return res.status(400).send({
-                message: "Theater is already exists , Bad Request!"
+                message: "Theater is same location  already exists , Bad Request!"
             })
         }
     }
