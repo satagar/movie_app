@@ -1,0 +1,1 @@
+exports.secretKey='<vimapp$euy38>'
