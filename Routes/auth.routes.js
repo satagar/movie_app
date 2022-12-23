@@ -8,6 +8,7 @@ const updateController = require("../Controllers/auth.update.controller")
 const isAdminvalidation = require("../Utilis/isAdmin");
 
 const UserMiddleware = require("../Middlewares/verifyUserReq")
+const UpdateMiddleware = require("../Middlewares/verifyUserReq")
 const validateTheatre = require("../Utilis/validate.theatre");
 const theatreController = require("../Controllers/theatre.controller");
 const theatreMovieController = require("../Controllers/theatreMovie.controller")
@@ -15,8 +16,8 @@ const theatreMovieController = require("../Controllers/theatreMovie.controller")
 //-------------------------User ------------------------------------
 router.post("/movie_app/api/v1/auth/signup", UserMiddleware.verifyUserRequest, authController.signup);
 router.post("/movie_app/api/v1/auth/login", UserMiddleware.verifyUserRequest, authController.login);
-router.put("/movie_app/api/v1/users", validate.validateToken, updateController.update)
-router.put("/movie_app/api/v1/users/:userId", validate.validateToken, isAdminvalidation.isAdmin, updateController.userUpdate)
+router.put("/movie_app/api/v1/users", validate.validateToken, UpdateMiddleware.verifyUserStatus, updateController.update)
+router.put("/movie_app/api/v1/users/:userId", validate.validateToken, isAdminvalidation.isAdmin, UpdateMiddleware.verifyUserStatus, updateController.userUpdate)
 
 //--------------------Movie routes ---------------------------------
 router.post("/movie_app/api/v1/movies", validateMovie.movieValidate, movieController.movieCreation);
