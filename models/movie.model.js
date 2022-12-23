@@ -33,7 +33,7 @@ const movieSchema= mongoose.Schema({
         required:true
     },
     casts:{
-        type:String,
+        type:[String],
         required:true
     },
     posterUrl:{

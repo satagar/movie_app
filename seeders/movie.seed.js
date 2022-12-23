@@ -1,0 +1,35 @@
+exports.movieData=[
+    {
+        movieItem:"bollywood1",
+        name:"sole1",
+        description:"bollywood hindi movie",
+        releaseDate:"12/12/1995",
+        releaseStarus:"RELEASED",
+        posterUrl:"sjcuihecnjd",
+        casts:["wrte"],
+        director:"vinay",
+        language:"hindi",
+    },
+    {
+        movieItem:"bollywood2",
+        name:"sole2",
+        description:"bollywood hindi movie",
+        releaseDate:"12/12/1996",
+        releaseStarus:"RELEASED",
+        posterUrl:"sjcuihecnjd",
+        casts:["wrte"],
+        director:"vinay",
+        language:"hindi",
+    },
+    {
+        movieItem:"bollywood3",
+        name:"sole3",
+        description:"bollywood hindi movie",
+        releaseDate:"12/12/1997",
+        releaseStarus:"RELEASED",
+        posterUrl:"sjcuihecnjd",
+        casts:["wrte"],
+        director:"vinay",
+        language:"hindi",
+    }
+]
