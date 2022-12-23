@@ -73,7 +73,7 @@ exports.login = async(req, res) => {
             })
         }
 
-        var token = jwt.sign({ id: user.userId }, config.secret, {
+        var token = jwt.sign({ userId: user.userId }, config.secret, {
             expiresIn: 86400
         })
 

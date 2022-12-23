@@ -17,7 +17,7 @@ exports.validateToken = async(req, res, next) => {
             })
         }
 
-        req.userId = decode.id;
+        req.userId = decode.userId;
         next();
     })
 }

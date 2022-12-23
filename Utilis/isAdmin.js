@@ -5,7 +5,7 @@ exports.isAdmin = async(req, res, next) => {
         const user = await UserModel.findOne({
             userId: req.userId
         });
-        console.log(user);
+
         if (user && user.userStatus == "APPROVED") {
             next();
         } else {
