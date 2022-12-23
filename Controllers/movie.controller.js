@@ -103,7 +103,7 @@ exports.update = async(req, res) => {
 exports.delete = async(req, res) => {
     try {
         const movie = await Movie.findOneAndDelete({ _id: req.params.id });
-
+        console.log(movie);
         if (!movie) {
             return res.status(404).send({
                 message: "Movie Not Found!"

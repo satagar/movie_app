@@ -8,11 +8,13 @@ exports.update = async(req, res) => {
         }, {
             password: bcrypt.hashSync(req.body.password, 8)
         }).exec();
+        // console.log(users)
         res.status(200).send({
-            message: "User Updated Successfully!"
+            message: "User Updated Successfully!",
+            User: users
         })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(500).send({
             message: "Error Occurred in Updation!"
         })
@@ -31,13 +33,13 @@ exports.userUpdate = async(req, res) => {
             role: req.body.role,
             userStatus: req.body.userStatus
         }).exec();
-        console.log(users)
+        // console.log(users)
         res.status(200).send({
             message: 'User Updated Successfully!',
             User: users
         })
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.status(500).send({
             message: 'Error In Updation!'
         })
