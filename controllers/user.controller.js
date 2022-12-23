@@ -54,3 +54,16 @@ exports.signIn = async (req, res) => {
         return
     }
 }
+
+exports.validatePassword = async (req, res) => {
+    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+
+    if (!passwordIsValid) {
+        return res.status(401).send({
+            accessToken: null,
+            message: "Invalid Password!"
+        });
+    } else {
+        return res.status(200).send(passwordIsValid)
+    }
+}

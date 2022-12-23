@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const appConstant = require('../constants/app.constants')
 
 const movieSchema = new mongoose.Schema({
+    movieId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true
+    },
     name: {
         type: String,
         required: true
@@ -56,4 +60,4 @@ const movieSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.Model('movieModel', movieSchema)
+module.exports = mongoose.model('movieModel', movieSchema)

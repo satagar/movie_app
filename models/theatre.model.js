@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const theatreSchema = new mongoose.Schema({
+    theatreId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true
+    },
     name: {
         type: String,
         required: true
@@ -19,7 +23,7 @@ const theatreSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        immutable: true,  
+        immutable: true,
         default: () => {
             return Date.now();
         }
@@ -30,9 +34,9 @@ const theatreSchema = new mongoose.Schema({
             return Date.now();
         }
     },
-    movies : {
-        type : [mongoose.SchemaTypes.ObjectId],
-        ref : "Movie"
+    movies: {
+        type: [mongoose.SchemaTypes.ObjectId],
+        ref: "Movie"
     }
 })
 
