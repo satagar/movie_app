@@ -26,12 +26,7 @@ exports.movieValidate = (req,res,next)=>{
             message:"Movie Price  not found! Price is required!"
         })
     }
-    if(!body.price){
-        return res.status(400).send({
-            message:"Movie Price  not found! director is Price!"
-        })
-    }
-    if(!movieReleaseStatus[body.releaseStatus]){
+    if(!movieReleaseStatus[body.releaseStatus.toUpperCase()]){
         return res.status(400).send({
             message:"Movie Release Status  not found! Release Status Price!"
         })

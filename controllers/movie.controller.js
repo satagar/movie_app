@@ -7,7 +7,7 @@ exports.createMovies = async (req,res)=>{
             name:body.name,
             description:body.description,
             releaseDate:body.releaseDate,
-            releaseStatus:body.releaseStatus,
+            releaseStatus:body.releaseStatus.toUpperCase(),
             director:body.director,
             language:body.language,
             movieImage:body.movieImage,
@@ -18,6 +18,7 @@ exports.createMovies = async (req,res)=>{
                 const movies = await MOVIE.create(movie)
                 return res.status(201).send({
                     message:"Movie created successfully!",
+                    Created_Movie : movies
                 })
           }catch(err){
              console.log(err.message)
