@@ -15,7 +15,7 @@ const theatreMovieController = require("../Controllers/theatreMovie.controller")
 
 //-------------------------User ------------------------------------
 router.post("/movie_app/api/v1/auth/signup", UserMiddleware.verifyUserRequest, authController.signup);
-router.post("/movie_app/api/v1/auth/login", UserMiddleware.verifyUserRequest, authController.login);
+router.post("/movie_app/api/v1/auth/login", authController.login);
 router.put("/movie_app/api/v1/users", validate.validateToken, UpdateMiddleware.verifyUserStatus, updateController.update)
 router.put("/movie_app/api/v1/users/:userId", validate.validateToken, isAdminvalidation.isAdmin, UpdateMiddleware.verifyUserStatus, updateController.userUpdate)
 

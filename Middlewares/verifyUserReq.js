@@ -40,7 +40,7 @@ exports.verifyUserRequest = async(req, res, next) => {
         })
     }
     const roleTypes = ["CUSTOMER", "ADMIN", "CLIENT"];
-    if (!req.body.role.includes(roleTypes)) {
+    if (!roleTypes.includes(req.body.role)) {
         return res.status(400).send({
             message: "Roles invalid values must be CUSTOMER|| ADMIN|| CLIENT"
         })
@@ -56,7 +56,7 @@ exports.verifyUserStatus = async(req, res, next) => {
         })
     }
     const roleTypes = ["CUSTOMER", "ADMIN", "CLIENT"];
-    if (!req.body.role.includes(roleTypes)) {
+    if (!roleTypes.includes(req.body.role)) {
         return res.status(400).send({
             message: "Roles invalid values must be CUSTOMER|| ADMIN|| CLIENT"
         })
@@ -69,7 +69,7 @@ exports.verifyUserStatus = async(req, res, next) => {
     }
 
     const userStatusTypes = ["APPROVED", "PENDING"];
-    if (!req.body.userStatus.includes(userStatusTypes)) {
+    if (!userStatusTypes.includes(req.body.userStatus)) {
         return res.status(400).send({
             message: "userStatus Invalid values must be APPROVED || PENDING"
         })
