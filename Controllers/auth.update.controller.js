@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 exports.update = async(req, res) => {
     try {
-        const users = await UserModel.findOneAndUpdate({
+        await UserModel.findOneAndUpdate({
             userId: req.userId
         }, {
             password: bcrypt.hashSync(req.body.password, 8)
