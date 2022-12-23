@@ -44,13 +44,6 @@ exports.isValidBodyForSignin = (req,res,next)=>{
             message: "Bad request!"
         })
     }
-    if(body.email){
-        if(!isValidEmail(body.email)){
-            return res.status(400).send({
-                message: "Invalied Email , Bad request."
-            })
-        }
-    }
     next()
 }
 exports.updateValidation = (req,res,next)=>{
