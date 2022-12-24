@@ -77,3 +77,22 @@ exports.validatePassword = async (req, res) => {
         userStatus: userModel.userStatus
     })
 }
+
+exports.updateUser = async (req, res) => {
+    const requestedUser = await userModel.findOneAndUpdate({ userId: req.params.userId },
+        {
+            name: req.body.name,
+            password: bcrypt.hashSync(req.body.password, 8),
+            userStatus: req.body.userStatus,
+            userType: req.body.userType
+        })
+    if (requestedUser.userId != undefined) {
+        res.status(200).send({
+            message: "User details updated successfully"
+        })
+    } else {
+        res.status(500).send({
+            message: "Internal error occurred in updating the user details!"
+        })
+    }
+}

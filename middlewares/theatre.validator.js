@@ -1,3 +1,4 @@
+const theatreModel = require('../models/theatre.model')
 
 exports.validateTheatre = async (req, res) => {
 

@@ -1,5 +1,5 @@
 const movie = require('../controllers/movie.controller')
-const { validateMovie } = require("../middlewares/movie.Validator")
+const { validateMovie } = require("../middlewares/movie.validator")
 //const express = require('express')
 //const router = express.Router()
 

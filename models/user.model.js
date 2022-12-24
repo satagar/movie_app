@@ -6,13 +6,15 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     userId: {
-        type: String,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true,
         unique: true
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        isValidEmail: true
     },
     password: {
         type: String,
@@ -22,14 +24,12 @@ const userSchema = new mongoose.Schema({
         type: Date,
         required: true,
         immutable: true,
-        default: Date.now()
+        default: () => { return Date.now() }
     },
     updatedAt: {
         type: Date,
         required: true,
-        default: () => {
-            return Date.now()
-        }
+        default: () => { return Date.now() }
     },
     userType: {
         type: String,

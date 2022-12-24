@@ -1,3 +1,4 @@
+const moviesModel = require('../models/movies.model')
 const theatreModel = require('../models/theatre.model')
 //const moviesModel = require('../models/movies.model')
 
@@ -6,10 +7,7 @@ exports.createTheatre = async (req, res) => {
         name: req.body.name,
         description: req.body.description,
         city: req.body.city,
-        pincode: req.body.pincode,
-        createdAt: req.body.createdAt,
-        updatedAt: req.body.updatedAt,
-        movies: req.body.movies
+        pincode: req.body.pincode
     }
     const newtheatre = await theatreModel.create(addTheatre)
     return res.status(201).send(newtheatre)
@@ -41,7 +39,7 @@ exports.getTheatre = async (req, res) => {
     }
 }
 
-exports.updateTheatres = async (req, res) => {
+exports.updateTheatre = async (req, res) => {
     const savedTheatre = await theatreModel.findOne({ _id: req.params._id })
     if (!savedTheatre) {
         return res.status(400).send({
@@ -80,9 +78,31 @@ exports.deleteTheatre = async (req, res) => {
 }
 
 exports.addMoviesToATheater = async (req, res) => {
-
+    const existingTheatre = await theatreModel.findOne({ theatreId: req.params.theatreId })
+    movieIds = req.body.movieIds
+    //Add movie ids to the theatre
+    if (req.body.insert) {
+        movieIds.forEach(movieId => {
+            existingTheatre.movies.push(movieId)
+        });
+    } else {
+        existingMovieIds = existingTheatre.movies
+        movieIds.forEach(movieId => {
+            existingMovieIds = existingMovieIds.filter(smi => smi != movieId)
+        })
+        existingTheatre.movies = existingMovieIds
+    }
+    await existingTheatre.save()
+    res.status(200).send(existingTheatre)
 }
 
 exports.checkMovieInsideATheatre = async (req, res) => {
+    const existingTheatre = await theatreModel.findOne({ theatreId: req.params.theatreId })
+    const existingMovieIds = await moviesModel.findOne({ movieId: req.params.movieId });
 
+
+    const responseBody = {
+        message: existingTheatre.movies.includes(existingMovieIds.movieId) ? "Movie is present" : "Movie is not present"
+    }
+    res.status(200).send(responseBody);
 }
