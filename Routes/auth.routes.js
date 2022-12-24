@@ -23,7 +23,7 @@ router.put("/movie_app/api/v1/users/:userId", validate.validateToken, isAdminval
 router.post("/movie_app/api/v1/movies", validate.validateToken, isAdminvalidation.isAdmin, validateMovie.movieValidate, movieController.movieCreation);
 router.get("/movie_app/api/v1/movies", validate.validateToken, movieController.getAllMovies);
 router.get("/movie_app/api/v1/movies/:id", validate.validateToken, movieController.getById); //http://localhost:5500/movie_app/api/v1/movies/639dd490c7a8f38a0572e033
-router.put("/movie_app/api/v1/movies/:id", validate.validateToken, isAdminvalidation.isAdmin, validateMovie.movieValidate, movieController.update);
+router.put("/movie_app/api/v1/movies/:id", validate.validateToken, isAdminvalidation.isAdmin, movieController.update);
 router.delete("/movie_app/api/v1/movies/:id", validate.validateToken, isAdminvalidation.isAdmin, movieController.delete);
 
 
@@ -39,10 +39,10 @@ router.delete("/movie_app/api/v1/theatres/:id", validate.validateToken, isAdminv
 
 
 //---------------------Theatre and Movie combined routes-----------------------------
-router.put("/movie_app/api/v2/theatres/:id/movies", theatreMovieController.addMovieToTheatre);
-router.get("/movie_app/api/v1/theatres/:movieId", theatreMovieController.findTheatreByMovies); // Not Working
-router.get("/movie_app/api/v2/theatres", theatreMovieController.getAllTheatres); //use /theatre?movieId=id for searching theatre by movieId
-router.get("/movie_app/api/v2/theatres/:theatreId/movies/:movieId", theatreMovieController.checkMovieInsideATheatre);
-router.delete("/movie_app/api/v2/theatres/:name", validate.validateToken, isAdminvalidation.isAdmin, theatreMovieController.deleteByTheatreName)
+router.put("/movie_app/api/v2/theatres/:id/movies", validate.validateToken, isAdminvalidation.isAdmin, theatreMovieController.addMovieToTheatre);
+router.get("/movie_app/api/v1/theatres/:movieId", validate.validateToken, theatreMovieController.findTheatreByMovies); // Not Working
+router.get("/movie_app/api/v2/theatres", validate.validateToken, theatreMovieController.getAllTheatres); //use /theatre?movieId=id for searching theatre by movieId
+router.get("/movie_app/api/v2/theatres/:theatreId/movies/:movieId", validate.validateToken, theatreMovieController.checkMovieInsideATheatre);
+router.delete("/movie_app/api/v2/theatres/:name", validate.validateToken, isAdminvalidation.isAdmin, validate.validateToken, isAdminvalidation.isAdmin, theatreMovieController.deleteByTheatreName)
 
 module.exports = router;

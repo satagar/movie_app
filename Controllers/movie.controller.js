@@ -88,7 +88,7 @@ exports.update = async(req, res) => {
                 movie.Director = req.body.Director != undefined ? req.body.Director : movie.Director,
                 movie.casts = req.body.casts != undefined ? req.body.casts : movie.casts
         }
-        // console.log(movie)
+        console.log(movie)
         const updatedMovie = await movie.save()
 
         res.status(200).send(updatedMovie)

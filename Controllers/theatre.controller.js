@@ -96,7 +96,7 @@ exports.delete = async(req, res) => {
                 message: "Theatre Not Found!"
             })
         }
-        await theatre.save();
+        // await theatre.save();
         res.status(200).send({
             message: 'Deleted Theatre Details Successfully'
         })
