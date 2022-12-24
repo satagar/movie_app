@@ -2,8 +2,11 @@ const jwt = require("jsonwebtoken");
 const config = require("../Configs/config.secret");
 
 exports.validateToken = async(req, res, next) => {
-    var token = req.headers["authorization"]
-        //.split(' ')[1];
+    var authValue = req.headers["authorization"];
+    if (typeof authValue === 'string') {
+        var token = authValue.split(' ')[1];
+    }
+
 
     if (!token) {
         return res.status(403).send({
