@@ -28,13 +28,13 @@ router.delete("/movie_app/api/v1/movies/:id", movieController.delete);
 
 
 //---------------------Theatre routes-----------------------------
-router.post("/movie_app/api/v1/theatres", validateTheatre.theatreValidate, theatreController.theatreCreation);
-router.get("/movie_app/api/v1/theatres", theatreController.getAlltheatres);
-router.get("/movie_app/api/v1/theatres/:id", theatreController.getById);
-router.get("/movie_app/api/v1/theatres/:pincode", theatreController.getByPincode);
-router.get("/movie_app/api/v1/theatres/:city", theatreController.getByCity);
-router.put("/movie_app/api/v1/theatres/:id", validateTheatre.theatreValidate, theatreController.update);
-router.delete("/movie_app/api/v1/theatres/:id", theatreController.delete);
+router.post("/movie_app/api/v1/theatres", validate.validateToken, validateTheatre.theatreValidate, theatreController.theatreCreation);
+router.get("/movie_app/api/v1/theatres", validate.validateToken, theatreController.getAlltheatres);
+router.get("/movie_app/api/v1/theatres/:id", validate.validateToken, theatreController.getById);
+router.get("/movie_app/api/v1/theatres/:pincode", validate.validateToken, theatreController.getByPincode);
+router.get("/movie_app/api/v1/theatres/:city", validate.validateToken, theatreController.getByCity);
+router.put("/movie_app/api/v1/theatres/:id", validate.validateToken, validateTheatre.theatreValidate, theatreController.update);
+router.delete("/movie_app/api/v1/theatres/:id", validate.validateToken, theatreController.delete);
 
 
 
