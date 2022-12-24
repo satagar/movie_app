@@ -135,3 +135,27 @@ exports.updateUser = async (req,res)=>{
     })
    }
 }
+
+exports.userFilter = async (req,res)=>{
+    const find = {};
+    const query = req.query;
+    if(query.id){
+           find._id = query.id
+    }
+    if(query.name){
+        find.name = {
+            $regex:query.name
+        }
+    }
+    try{
+        const user = await USER.find(find)
+        return res.status(200).send({
+            USER_DETAILS : user
+        })
+    }catch(err){
+        console.log(err.message)
+        return res.status(500).send({
+            message:"Internal server error"
+        })
+    }
+}

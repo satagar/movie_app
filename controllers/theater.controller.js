@@ -61,7 +61,7 @@ exports.getTheaterByAllFileds = async (req, res) => {
         queryData.pincode = query.pincode
     }
     try {
-        const theater = await THEATER.findOne(queryData)
+        const theater = await THEATER.find(queryData)
         return res.status(200).send({
             Theater: theater
         })
@@ -217,6 +217,33 @@ exports.MovieInsideTheTheater = async (req,res)=>{
             Movie_Runing_in_theater : theater
           })  
     }catch (err) {
+        console.log(err.message)
+        return res.status(500).send({
+            message: "Internal server error!"
+        })
+    }
+}
+exports.deleteTheaterByName = async (req, res) => {
+    const name = req.params.name
+    if (!name) {
+        return res.status(400).send({
+            message: "bad request!"
+        })
+    }
+    try {
+        const theater = await THEATER.findOneAndDelete({
+            name: name
+        })
+        if (!theater) {
+            return res.status(404).send({
+                message: `${name} Theater does not exists .`,
+            })
+        }
+        return res.status(200).send({
+            message: `${name} Theater deleted successfully!`,
+            deleted_theater: theater
+        })
+    } catch (err) {
         console.log(err.message)
         return res.status(500).send({
             message: "Internal server error!"
