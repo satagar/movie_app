@@ -43,5 +43,6 @@ router.put("/movie_app/api/v2/theatres/:id/movies", theatreMovieController.addMo
 router.get("/movie_app/api/v1/theatres/:movieId", theatreMovieController.findTheatreByMovies); // Not Working
 router.get("/movie_app/api/v2/theatres", theatreMovieController.getAllTheatres); //use /theatre?movieId=id for searching theatre by movieId
 router.get("/movie_app/api/v2/theatres/:theatreId/movies/:movieId", theatreMovieController.checkMovieInsideATheatre);
+router.delete("/movie_app/api/v2/theatres/:name", validate.validateToken, isAdminvalidation.isAdmin, theatreMovieController.deleteByTheatreName)
 
 module.exports = router;

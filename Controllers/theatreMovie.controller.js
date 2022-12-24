@@ -106,3 +106,25 @@ exports.checkMovieInsideATheatre = async(req, res) => {
     }
 
 }
+
+exports.deleteByTheatreName = async(req, res) => {
+    try {
+        const theatre = await Theatre.findOneAndDelete({ name: req.query.name });
+        if (!theatre) {
+            return res.status(404).send({
+                message: "Theatre Not Found"
+            })
+        }
+
+        res.status(200).send({
+            message: "Theatre Deleted Successfully!"
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            message: "Error Occured In Deletion"
+        })
+    }
+
+}
