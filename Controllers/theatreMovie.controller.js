@@ -109,7 +109,8 @@ exports.checkMovieInsideATheatre = async(req, res) => {
 
 exports.deleteByTheatreName = async(req, res) => {
     try {
-        const theatre = await Theatre.findOneAndDelete({ name: req.query.name });
+        const theatre = await Theatre.findOneAndDelete({ name: req.params.name });
+        // console.log(theatre)
         if (!theatre) {
             return res.status(404).send({
                 message: "Theatre Not Found"
