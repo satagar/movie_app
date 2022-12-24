@@ -23,7 +23,7 @@ router.put("/movie_app/api/v1/users/:userId", validate.validateToken, isAdminval
 router.post("/movie_app/api/v1/movies", validateMovie.movieValidate, movieController.movieCreation);
 router.get("/movie_app/api/v1/movies", movieController.getAllMovies);
 router.get("/movie_app/api/v1/movies/:id", movieController.getById); //http://localhost:5500/movie_app/api/v1/movies/639dd490c7a8f38a0572e033
-router.put("/movie_app/api/v1/movies/:id", movieController.update);
+router.put("/movie_app/api/v1/movies/:id", validateMovie.movieValidate, movieController.update);
 router.delete("/movie_app/api/v1/movies/:id", movieController.delete);
 
 

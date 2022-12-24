@@ -72,7 +72,7 @@ exports.getById = async(req, res) => {
 
 exports.update = async(req, res) => {
     try {
-        const movie = await Movie.find({ _id: req.params.id });
+        const movie = await Movie.findOne({ _id: req.params.id });
 
         if (!movie) {
             return res.status(404).send({
@@ -88,12 +88,13 @@ exports.update = async(req, res) => {
                 movie.Director = req.body.Director != undefined ? req.body.Director : movie.Director,
                 movie.casts = req.body.casts != undefined ? req.body.casts : movie.casts
         }
-        const updatedMovie = await movie.save();
+        // console.log(movie)
+        const updatedMovie = await movie.save()
 
         res.status(200).send(updatedMovie)
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.status(500).send({
             message: 'Error Occurred in Updation!'
         })
@@ -103,20 +104,18 @@ exports.update = async(req, res) => {
 exports.delete = async(req, res) => {
     try {
         const movie = await Movie.findOneAndDelete({ _id: req.params.id });
-        console.log(movie);
         if (!movie) {
             return res.status(404).send({
                 message: "Movie Not Found!"
             });
 
         }
-        await movie.save();
         res.status(200).send({
             message: "Deleted Movie Successfully"
         })
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.status(500).send({
             message: "Error Occurred in Deletion!"
         })
