@@ -5,8 +5,8 @@ exports.isAdmin = async(req, res, next) => {
         const user = await UserModel.findOne({
             userId: req.userId
         });
-
-        if (user && user.userStatus == "APPROVED") {
+        // console.log(user)
+        if (user && user.role == "ADMIN") {
             next();
         } else {
             return res.status(403).send({
