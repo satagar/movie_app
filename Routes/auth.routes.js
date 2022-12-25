@@ -1,23 +1,38 @@
 const express = require("express");
 const router = express.Router();
-const validateMovie = require("../Utilis/validate.movie")
-const movieController = require("../Controllers/movie.controller")
-const authController = require("../Controllers/auth.controller")
-const validate = require("../Utilis/validateToken")
-const updateController = require("../Controllers/auth.update.controller")
-const isAdminvalidation = require("../Utilis/isAdmin");
 
+//------------------UserController-----------------------------
+const authController = require("../Controllers/auth.controller")
+const updateController = require("../Controllers/auth.update.controller")
+const findAllController = require("../Controllers/auth.getAllUser.controller")
+
+//-----------------UserMiddlewares-------------------------------
 const UserMiddleware = require("../Middlewares/verifyUserReq")
 const UpdateMiddleware = require("../Middlewares/verifyUserReq")
+
+//----------------MovieControllerAndMiddleware--------------------
+const validateMovie = require("../Utilis/validate.movie")
+const movieController = require("../Controllers/movie.controller")
+
+//----------------TheatreControllerAndMiddleware------------------
 const validateTheatre = require("../Utilis/validate.theatre");
 const theatreController = require("../Controllers/theatre.controller");
 const theatreMovieController = require("../Controllers/theatreMovie.controller")
 
+//-------------------Other Validators-----------------------------
+const validate = require("../Utilis/validateToken")
+const isAdminvalidation = require("../Utilis/isAdmin");
+
+//-----------------------------------------ROUTES-----------------------------------------------------------------
+
+
 //-------------------------User ------------------------------------
 router.post("/movie_app/api/v1/auth/signup", UserMiddleware.verifyUserRequest, authController.signup);
 router.post("/movie_app/api/v1/auth/login", authController.login);
-router.put("/movie_app/api/v1/users", validate.validateToken, isAdminvalidation.isAdmin, UpdateMiddleware.verifyUserStatus, updateController.update)
+router.get("/movie_app/api/v1/users", validate.validateToken, isAdminvalidation.isAdmin, findAllController.findAll) //Help in Checking Failure cases
+router.put("/movie_app/api/v1/users", validate.validateToken, UpdateMiddleware.verifyUserStatus, updateController.update)
 router.put("/movie_app/api/v1/users/:userId", validate.validateToken, isAdminvalidation.isAdmin, isAdminvalidation.isAdmin, UpdateMiddleware.verifyUserStatus, updateController.userUpdate)
+
 
 //--------------------Movie routes ---------------------------------
 router.post("/movie_app/api/v1/movies", validate.validateToken, isAdminvalidation.isAdmin, validateMovie.movieValidate, movieController.movieCreation);
