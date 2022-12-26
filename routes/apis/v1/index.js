@@ -33,6 +33,6 @@ route.get('/users/filter',authMiddleware.isAuthorized,authMiddleware.isAdmin,aut
 route.post('/movies/booking',authMiddleware.isAuthorized,bookingMiddleware.validateBookingBody,bookingController.CreateBooking)
 route.put('/movies/booking/update/:id',authMiddleware.isAuthorized,bookingMiddleware.updateBodyValidate,bookingController.bookingUpdate)
 route.get('/movies/booking/:id',authMiddleware.isAuthorized,bookingController.getBookingByID)
-route.get('/movies/bookings',authMiddleware.isAuthorized,bookingController.getAllBooking)
+route.get('/movies/bookings',authMiddleware.isAuthorized,authMiddleware.isAdmin,bookingController.getAllBooking)
 module.exports = route;
 
