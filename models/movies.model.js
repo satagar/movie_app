@@ -3,7 +3,7 @@ const appConstant = require('../constants/app.constants')
 
 const movieSchema = new mongoose.Schema({
     movieId: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: String,
         required: true
     },
     name: {
@@ -17,7 +17,10 @@ const movieSchema = new mongoose.Schema({
     releaseDate: {
         type: Date,
         required: true,
-        immutable: true
+        immutable: true,
+        default: () => {
+            return Date.now()
+        }
     },
     releaseStatus: {
         type: Date,

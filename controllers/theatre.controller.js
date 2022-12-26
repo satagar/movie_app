@@ -25,22 +25,20 @@ exports.getAllTheatres = async (req, res) => {
         findTheatres.pincode = req.query.pincode
     }
     const foundTheatres = await theatreModel.find(findTheatres)
+    if (req.query.movieId != undefined) {
+        // filter the list of theatres
+        foundTheatres = theatreModel.filter(t => t.movies.includes(req.query.movieId))
+    }
     return res.status(200).send(foundTheatres)
 }
 
 exports.getTheatre = async (req, res) => {
-    try {
-        const theatre = await theatreModel.findOne({ _id: req.params._id })
-        return res.status(200).send(theatre)
-    } catch (error) {
-        res.status(404).send({
-            message: "Theatre not found!"
-        })
-    }
+    const theatre = await theatreModel.findOne({ theatreId: req.params.theatreId })
+    return res.status(200).send(theatre)
 }
 
 exports.updateTheatre = async (req, res) => {
-    const savedTheatre = await theatreModel.findOne({ _id: req.params._id })
+    const savedTheatre = await theatreModel.findOne({ theatreId: req.params.theatreId })
     if (!savedTheatre) {
         return res.status(400).send({
             message: " Theatre with this name doesn't exist!"
@@ -79,14 +77,14 @@ exports.deleteTheatre = async (req, res) => {
 
 exports.addMoviesToATheater = async (req, res) => {
     const existingTheatre = await theatreModel.findOne({ theatreId: req.params.theatreId })
-    movieIds = req.body.movieIds
+    const movieIds = req.body.movieIds
     //Add movie ids to the theatre
     if (req.body.insert) {
         movieIds.forEach(movieId => {
             existingTheatre.movies.push(movieId)
         });
     } else {
-        existingMovieIds = existingTheatre.movies
+        const existingMovieIds = existingTheatre.movies
         movieIds.forEach(movieId => {
             existingMovieIds = existingMovieIds.filter(smi => smi != movieId)
         })
@@ -98,11 +96,11 @@ exports.addMoviesToATheater = async (req, res) => {
 
 exports.checkMovieInsideATheatre = async (req, res) => {
     const existingTheatre = await theatreModel.findOne({ theatreId: req.params.theatreId })
-    const existingMovieIds = await moviesModel.findOne({ movieId: req.params.movieId });
+    const existingMovieIds = await moviesModel.findOne({ movieId: req.params.movieId })
 
 
     const responseBody = {
         message: existingTheatre.movies.includes(existingMovieIds.movieId) ? "Movie is present" : "Movie is not present"
     }
-    res.status(200).send(responseBody);
+    res.status(200).send(responseBody)
 }

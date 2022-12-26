@@ -5,7 +5,7 @@ const authJwt = require('../middlewares/user.validator')
 //const router = express.Router()
 
 module.exports = function (app) {
-    app.post('/mba/api/v1/movies/', [authJwt.isAdmin], validateMovie, movie.createMovie)
+    app.post('/mba/api/v1/movies/', movie.createMovie)
     app.get('/mba/api/v1/movies/', movie.getAllMovies)
     app.get('/mba/api/v1/movies/:id', movie.getMovieById)
     app.get('/mba/api/v1/movies?name=', movie.getMovieByName)

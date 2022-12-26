@@ -1,7 +1,7 @@
 const userModel = require('../models/user.model')
 const constants = require('../constants/user.constants')
 const { userType, userStatus } = require('../constants/user.constants')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 const config = require('../configs/auth.config')
 const jwt = require('jsonwebtoken')
 
@@ -19,18 +19,17 @@ exports.signUp = async (req, res) => {
             message: " You can't signUp again, your account status is${constants.userStatus.suspended}"
         })
     }
+    const userObj = {
+        name: req.body.name,
+        userId: req.body.userId,
+        email: req.body.email,
+        userType: req.body.userType,
+        password: bcrypt.hashSync(req.body.password, 12),
+        userStatus: userStatus
+    }
     try {
-        const userObj = {
-            name: req.body.name,
-            userId: req.body.userId,
-            email: req.body.email,
-            userType: req.body.userType,
-            password: bcrypt.hashSync(req.body.password, 12),
-            userStatus: userStatus
-        }
+
         const createdUser = await userModel.create(userObj)
-    } catch (error) {
-        message: "Failed to create user!"
         const postResponse = {
             name: userCreated.name,
             userId: userCreated.userId,
@@ -40,8 +39,14 @@ exports.signUp = async (req, res) => {
             createdAt: userCreated.createdAt,
             updatedAt: userCreated.updatedAt
         }
+        res.status(201).send(postResponse)
+    } catch (error) {
+        message: "Failed to create user!"
+        res.status(500).send({
+            message: " Some Internal Error occured while inserting the records!"
+        })
     }
-    return res.status(201).send(postResponse)
+
 }
 
 exports.signIn = async (req, res) => {
@@ -59,7 +64,7 @@ exports.signIn = async (req, res) => {
 }
 
 exports.validatePassword = async (req, res) => {
-    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+    var passwordIsValid = bcrypt.compareSync(req.body.password, userModel.password);
 
     if (!passwordIsValid) {
         return res.status(401).send({
@@ -76,6 +81,24 @@ exports.validatePassword = async (req, res) => {
         userType: userModel.userType,
         userStatus: userModel.userStatus
     })
+}
+
+exports.getAllUsers = async (req, res) => {
+    const findUsers = {}
+    if (req.query.name != undefined) {
+        findUsers.name = req.query.name
+    }
+    if (req.query.userId != undefined) {
+        findUsers.userId = req.query.userId
+    }
+    if (req.query.email != undefined) {
+        findUsers.email = req.query.email
+    }
+    if (req.query.userType != undefined) {
+        findUsers.userType = req.query.userType
+    }
+    const requestedUsers = await userModel.find(findUsers)
+    res.status(200).send(requestedUsers)
 }
 
 exports.updateUser = async (req, res) => {

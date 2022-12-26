@@ -28,7 +28,7 @@ exports.getAllMovies = async (req, res) => {
         const foundMovies = await movieModel.find(findMovies)
         res.status(200).send(foundMovies)
     } catch (err) {
-        res.status(404).send({
+        res.status(400).send({
             message: "Requested movies not found!"
         })
     }
@@ -39,7 +39,7 @@ exports.getMovieById = async (req, res) => {
         const findMovie = await movieModel.findOne({ _id: req.params._id })
         res.status(200).send(findMovie)
     } catch (error) {
-        res.status(404).send({
+        res.status(400).send({
             message: "Requested movie not found!"
         })
     }
@@ -50,7 +50,7 @@ exports.getMovieByName = async (req, res) => {
         const getMovie = await movieModel.findOne({ name: req.params.name })
         res.status(200).send(getMovie)
     } catch (error) {
-        res.status(404).send({
+        res.status(400).send({
             message: "Requested movie not found!"
         })
     }
@@ -60,7 +60,7 @@ exports.updateMovie = async (req, res) => {
     const existingMovie = await movieModel.findOne({ _id: req.params._id })
     if (!existingMovie) {
         res.status(400).send({
-            message: " Mvie name doesn't exist in the database, first add this movie!"
+            message: " Movie name doesn't exist in the database, first add this movie!"
         })
     }
     if (req.body.name != undefined) {

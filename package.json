@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/Raahull2404/movie_app#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.0",
     "nodemon": "^2.0.20"
   }

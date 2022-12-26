@@ -2,6 +2,13 @@ const theatreModel = require('../models/theatre.model')
 
 exports.validateTheatre = async (req, res) => {
 
+    if (!req.body.theatreId) {
+        res.status(400).send({
+            message: "No theatre id is provided!"
+        })
+        return
+    }
+
     if (!req.body.name) {
         res.status(400).send({
             message: "Please provide a theatre name!"
@@ -17,4 +24,5 @@ exports.validateTheatre = async (req, res) => {
             message: "Please provide a valid pincode"
         })
     }
+    next()
 }
