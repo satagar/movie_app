@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const paymentSchema = new mongoose.Schema({
+const bookingSchema = new mongoose.Schema({
     theaterId : {
         type:mongoose.SchemaTypes.ObjectId,
         ref:"theater"
@@ -42,5 +42,5 @@ const paymentSchema = new mongoose.Schema({
     }
 })
 
-const  paymentModel = mongoose.model('payments',paymentSchema)
-module.exports = paymentModel;
+const  bookingModel = mongoose.model('bookingDetails',bookingSchema)
+module.exports = bookingModel;

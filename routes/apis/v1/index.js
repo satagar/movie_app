@@ -31,5 +31,6 @@ route.put('/users/update/:id',authMiddleware.isAuthorized,authMiddleware.isAdmin
 route.get('/users/filter',authMiddleware.isAuthorized,authMiddleware.isAdmin,authController.userFilter)
 //-----------------------------------------Movie booking routes----------------------------------------
 route.post('/movies/booking',authMiddleware.isAuthorized,bookingMiddleware.validateBookingBody,bookingController.CreateBooking)
+route.put('/movies/booking/update/:id',authMiddleware.isAuthorized,bookingMiddleware.updateBodyValidate,bookingController.bookingUpdate)
 module.exports = route;
 
