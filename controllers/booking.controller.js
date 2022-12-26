@@ -60,3 +60,36 @@ exports.bookingUpdate = async (req,res)=>{
         })
     }
 }
+
+exports.getBookingByID = async (req,res)=>{
+    const id = req.params.id;
+    try {
+        const booking = await BOOKING.findOne({_id:id})
+        if(!booking){
+            return res.status(404).send({
+                message:"Booking does not exists!"
+            })
+        }
+        return  res.status(200).send({
+            Booking_Summary : booking
+        })
+    }catch(err){
+        console.log(err.message);
+        return res.status(500).send({
+            message:"Internal server error! Please try after some time."
+        })
+    }
+}
+exports.getAllBooking= async (req,res)=>{
+    try {
+        const booking = await BOOKING.find({})
+        return  res.status(200).send({
+            Booking_Summaries : booking
+        })
+    }catch(err){
+        console.log(err.message);
+        return res.status(500).send({
+            message:"Internal server error! Please try after some time."
+        })
+    }
+}
