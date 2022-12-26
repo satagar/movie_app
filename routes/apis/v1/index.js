@@ -6,6 +6,8 @@ const theaterMiddleware = require('../../../middleware/theaterValidate.middlewar
 const theaterController = require('../../../controllers/theater.controller')
 const authController = require('../../../controllers/auth.controller')
 const authMiddleware = require('../../../middleware/authValidate.middleware')
+const bookingController = require('../../../controllers/booking.controller')
+const bookingMiddleware = require('../../../middleware/bookingValidation.middleware')
 //------------------------------------------Movie routes---------------------------------------------
 route.post('/movie/create',movieMiddleware.movieValidate,movieController.createMovies)
 route.get('/movie/filter',authMiddleware.isAuthorized,movieController.movieFilter)
@@ -27,4 +29,7 @@ route.post('/user/signin',authMiddleware.isValidBodyForSignin,authController.sig
 route.put('/user/update-password',authMiddleware.updateValidation,authMiddleware.isAuthorized,authController.UpdatePassword);
 route.put('/users/update/:id',authMiddleware.isAuthorized,authMiddleware.isAdmin,authController.updateUser)
 route.get('/users/filter',authMiddleware.isAuthorized,authMiddleware.isAdmin,authController.userFilter)
+//-----------------------------------------Movie booking routes----------------------------------------
+route.post('/movies/booking',authMiddleware.isAuthorized,bookingMiddleware.validateBookingBody,bookingController.CreateBooking)
 module.exports = route;
+
