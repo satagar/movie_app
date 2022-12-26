@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+//-------------------BookingCOntrollerAndMiddleware-----------
+const bookingController = require("../Controllers/createBooking.controller")
+const validateBookingReq = require("../Middlewares/verifyBookingReq")
+
 //------------------UserController-----------------------------
 const authController = require("../Controllers/auth.controller")
 const updateController = require("../Controllers/auth.update.controller")
@@ -25,6 +29,8 @@ const isAdminvalidation = require("../Utilis/isAdmin");
 
 //-----------------------------------------ROUTES-----------------------------------------------------------------
 
+//---------------------------Booking routes------------------------------------
+router.post("/movie_app/api/v1/bookings", validate.validateToken, validateBookingReq.verifyBooking, bookingController.createBooking)
 
 //-------------------------User ------------------------------------
 router.post("/movie_app/api/v1/auth/signup", UserMiddleware.verifyUserRequest, authController.signup);

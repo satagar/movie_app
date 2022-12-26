@@ -1,0 +1,1 @@
+exports.ticketPrice = 150;
