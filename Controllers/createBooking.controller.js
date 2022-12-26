@@ -3,17 +3,17 @@ const UserModel = require("../Models/user.model")
 const constant = require("../Utilis/constant")
 exports.createBooking = async(req, res) => {
 
-    const user = await UserModel.findOne({
+    var user = await UserModel.findOne({
         userId: req.userId
     });
 
     const bookingResp = {
         theatreId: req.body.theatreId,
         movieId: req.body.movieId,
-        userId: user.userId,
+        userId: user._id,
         Timming: req.body.Timming,
         noOfSeats: req.body.noOfSeats,
-        totalCost: (noOfSeats * constant.ticketPrice)
+        totalCost: (req.body.noOfSeats * constant.ticketPrice)
     }
     try {
         const booking = await Booking.create(bookingResp);

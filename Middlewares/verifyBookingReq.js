@@ -46,9 +46,9 @@ exports.verifyBooking = async(req, res, next) => {
     }
 
     var theatre = await Theatre.findOne({
-        _id: req.params.theatreId
+        _id: req.body.theatreId
     })
-
+    console.log(theatre)
     if (!theatre) {
         return res.status(404).send({
             message: "theatre Not found"
