@@ -21,6 +21,7 @@ mongoose.connect(DB.DB_URI, { useUnifiedTopology: true, useNewUrlParser: true },
 require('./routes/movie.routes')(app)
 require('./routes/theatre.routes')(app)
 require('./routes/user.routes')(app)
+require('./routes/booking.routes')(app)
 app.listen(PORT, () => {
     console.log("Server connected on port:", PORT)
 })

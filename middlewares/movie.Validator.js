@@ -1,4 +1,4 @@
-const constants = require('../constants/app.constants')
+const constants = require('../constants/constants')
 
 exports.validateMovie = async (req, res, next) => {
     if (!req.body.movieId) {

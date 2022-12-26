@@ -35,8 +35,8 @@ const theatreSchema = new mongoose.Schema({
         }
     },
     movies: {
-        type: [mongoose.SchemaTypes.ObjectId],
-        ref: "Movie"
+        type: String,
+        ref: "movieModel"
     }
 })
 

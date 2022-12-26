@@ -1,6 +1,5 @@
 const userModel = require('../models/user.model')
-const constants = require('../constants/user.constants')
-const { userType, userStatus } = require('../constants/user.constants')
+const { userType, userStatus } = require('../constants/constants')
 const bcrypt = require('bcrypt')
 const config = require('../configs/auth.config')
 const jwt = require('jsonwebtoken')

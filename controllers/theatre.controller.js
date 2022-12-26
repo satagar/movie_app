@@ -1,6 +1,6 @@
 const moviesModel = require('../models/movies.model')
 const theatreModel = require('../models/theatre.model')
-//const moviesModel = require('../models/movies.model')
+const constants = require('../constants/constants')
 
 exports.createTheatre = async (req, res) => {
     const addTheatre = {

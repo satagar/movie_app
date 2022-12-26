@@ -1,4 +1,5 @@
 const movieModel = require('../models/movies.model')
+const constants = require('../constants/constants')
 
 exports.createMovie = async (req, res) => {
     const addMovie = {
@@ -36,7 +37,7 @@ exports.getAllMovies = async (req, res) => {
 
 exports.getMovieById = async (req, res) => {
     try {
-        const findMovie = await movieModel.findOne({ _id: req.params._id })
+        const findMovie = await movieModel.findOne({ movieId: req.params.movieId })
         res.status(200).send(findMovie)
     } catch (error) {
         res.status(400).send({
@@ -57,10 +58,10 @@ exports.getMovieByName = async (req, res) => {
 }
 
 exports.updateMovie = async (req, res) => {
-    const existingMovie = await movieModel.findOne({ _id: req.params._id })
+    const existingMovie = await movieModel.findOne({ movieId: req.params.movieId })
     if (!existingMovie) {
         res.status(400).send({
-            message: " Movie name doesn't exist in the database, first add this movie!"
+            message: " Movie name doesn't exist in the database!"
         })
     }
     if (req.body.name != undefined) {
@@ -113,6 +114,6 @@ exports.updateMovie = async (req, res) => {
 }
 
 exports.deleteMovie = async (req, res) => {
-    const deletedMovie = await movieModel.deleteOne({ _id: req.params._id })
+    const deletedMovie = await movieModel.deleteOne({ movieId: req.params.movieId })
     res.status(200).send(deletedMovie)
 }

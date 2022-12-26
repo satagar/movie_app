@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: "approved"
+    },
+    bookingId: {
+        type: String,
+        ref: "bookingModel"
     }
 })
 

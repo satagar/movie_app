@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 const config = require("../configs/auth.config.js")
 const User = require("../models/user.model")
-const constants = require("../constants/user.constants")
+const constants = require("../constants/constants")
 const userModel = require("../models/user.model")
 
 
@@ -28,10 +28,10 @@ exports.verifyToken = (req, res, next) => {
 
 exports.isAdmin = async (req, res, next) => {
 
-    const user = await User.findOne({
+    const user = await userModel.findOne({
         userId: req.userId
     })
-    if (user && user.userType == constants.userType.admin) {
+    if (user && userModel.userType == constants.userType.admin) {
         next()
     } else {
         res.status(403).send({

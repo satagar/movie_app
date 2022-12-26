@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const appConstant = require('../constants/app.constants')
+const appConstant = require('../constants/constants')
 
 const movieSchema = new mongoose.Schema({
     movieId: {
