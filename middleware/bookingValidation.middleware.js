@@ -135,3 +135,18 @@ exports.updateBodyValidate = async (req,res,next)=>{
    }
    next ()
 }
+
+exports.validateForGetBooking = async (req,res)=>{
+    try {
+            const user = await USER.findOne({userId:req.userId})
+            if(user.userType!=='ADMIN'){
+                 req.body.userId = user._id;
+            }
+            next()
+    }catch (err) {
+        console.log(err.message)
+        return res.status(500).send({
+            message: "Something want wrong!"
+            });
+    }
+}

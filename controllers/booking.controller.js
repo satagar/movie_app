@@ -81,8 +81,12 @@ exports.getBookingByID = async (req,res)=>{
     }
 }
 exports.getAllBooking= async (req,res)=>{
+    const reqData = {}
+    if(req.body.userId){
+        reqData.userId = req.body.userId
+    }
     try {
-        const booking = await BOOKING.find({})
+        const booking = await BOOKING.find(reqData)
         return  res.status(200).send({
             Booking_Summaries : booking
         })
