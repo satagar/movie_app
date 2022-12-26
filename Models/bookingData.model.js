@@ -25,7 +25,7 @@ const bookingSchema = new mongoose.Schema({
         default: "IN_PROGRESS"
     },
 
-    Timming: {
+    Timing: {
         type: String,
         required: true
     },
@@ -39,7 +39,7 @@ const bookingSchema = new mongoose.Schema({
         type: Number
     },
 
-    createdat: {
+    createdAt: {
         type: Date,
         immutable: true,
         default: () => {

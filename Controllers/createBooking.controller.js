@@ -7,16 +7,17 @@ exports.createBooking = async(req, res) => {
         userId: req.userId
     });
 
-    const bookingResp = {
+    const bookingObj = {
         theatreId: req.body.theatreId,
         movieId: req.body.movieId,
         userId: user._id,
-        Timming: req.body.Timming,
+        status: req.body.status,
+        Timing: req.body.Timming,
         noOfSeats: req.body.noOfSeats,
         totalCost: (req.body.noOfSeats * constant.ticketPrice)
     }
     try {
-        const booking = await Booking.create(bookingResp);
+        const booking = await Booking.create(bookingObj);
         res.status(201).send(booking)
     } catch (error) {
         return res.status(500).send({

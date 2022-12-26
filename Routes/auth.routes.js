@@ -4,6 +4,7 @@ const router = express.Router();
 //-------------------BookingCOntrollerAndMiddleware-----------
 const bookingController = require("../Controllers/createBooking.controller")
 const validateBookingReq = require("../Middlewares/verifyBookingReq")
+const updateBookingController = require("../Controllers/updateBooking.controller")
 
 //------------------UserController-----------------------------
 const authController = require("../Controllers/auth.controller")
@@ -31,8 +32,8 @@ const isAdminvalidation = require("../Utilis/isAdmin");
 
 //---------------------------Booking routes------------------------------------
 router.post("/movie_app/api/v1/bookings", validate.validateToken, validateBookingReq.verifyBooking, bookingController.createBooking)
-
-//-------------------------User ------------------------------------
+router.put("/movie_app/api/v1/bookings/:id", validate.validateToken, isAdminvalidation.isAdmin, updateBookingController.updateBooking)
+    //-------------------------User ------------------------------------
 router.post("/movie_app/api/v1/auth/signup", UserMiddleware.verifyUserRequest, authController.signup);
 router.post("/movie_app/api/v1/auth/login", authController.login);
 router.get("/movie_app/api/v1/users", validate.validateToken, isAdminvalidation.isAdmin, findAllController.findAll) //Help in Checking Failure cases

@@ -27,17 +27,12 @@ exports.verifyBooking = async(req, res, next) => {
         })
     }
 
-    if (!req.body.Timming) {
+    if (!req.body.Timing) {
         return res.status(400).send({
             message: "Timming is Required"
         })
     }
 
-    if (!req.body.totalCost) {
-        return res.status(400).send({
-            message: "totalCost is Required"
-        })
-    }
 
     if (!req.body.noOfSeats) {
         return res.status(400).send({
@@ -48,7 +43,7 @@ exports.verifyBooking = async(req, res, next) => {
     var theatre = await Theatre.findOne({
         _id: req.body.theatreId
     })
-    console.log(theatre)
+
     if (!theatre) {
         return res.status(404).send({
             message: "theatre Not found"
