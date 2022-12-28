@@ -3,7 +3,9 @@ const router = express.Router();
 
 //----------------PaymentControllerAndMiddlewares----------------
 const createPaymentController = require("../Controllers/createPayment.controller");
-const validatePayment = require("../Middlewares/verifyPaymentReq")
+const validatePayment = require("../Middlewares/verifyPaymentReq");
+const getAllPayment = require("../Controllers/GetAllPayment.controller");
+const getByIdPayment = require("../Controllers/getPaymentById.controller")
 
 //-------------------BookingCOntrollerAndMiddleware-----------
 const bookingController = require("../Controllers/createBooking.controller")
@@ -38,6 +40,8 @@ const isAdminvalidation = require("../Utilis/isAdmin");
 
 //---------------------------Payment routes------------------------------------
 router.post("/movie_app/api/v1/payments", validate.validateToken, validatePayment.verifyPayment, createPaymentController.creatingPayment);
+router.get("/movie_app/api/v1/payments", validate.validateToken, getAllPayment.findAll);
+router.get("/movie_app/api/v1/payments/:id", validate.validateToken, isAdminvalidation.isAdmin, getByIdPayment.getPaymentOnId)
 
 //---------------------------Booking routes------------------------------------
 router.post("/movie_app/api/v1/bookings", validate.validateToken, validateBookingReq.verifyBooking, bookingController.createBooking)
