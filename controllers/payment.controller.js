@@ -1,5 +1,6 @@
 const PAYMENT = require('../models/payment.model');
 const BOOKING = require('../models/booking.model')
+const USER = require('../models/user.model')
 exports.createPayment = async (req, res) => {
     const reqData = {
         bookingId: req.body.bookingId,
@@ -32,4 +33,38 @@ exports.createPayment = async (req, res) => {
             message: "Internal server error! "
         })
     }
+}
+
+exports.getAllpayments  = async (req,res) => {
+     const reqData = {};
+     try {
+           const user = await USER.findOne({userId:req.userId});
+           if(user.userType!='ADMIN'){
+               reqData.userId = user._id
+               reqData.status = 'COMPLETED'
+           }
+           const booking = await BOOKING.find(reqData);
+           const bookingIds = booking.map(b => b._id);
+           const payment = await PAYMENT.find({_id:{ $all: bookingIds }})
+           return res.status(200).send(payment);
+     }catch( err ){
+        return res.status(500).send({
+            message: "Internal server error! "
+        })
+    }
+}
+exports.getPaymentById  = async (req,res) => {
+    try {
+          const payment = await PAYMENT.findOne({_id:req.params.id});
+          if(!payment){
+            return res.status(404).send({
+                message:"Payment ID does not exists."
+            })
+          }
+          return res.status(200).send(payment);
+    }catch( err ){
+       return res.status(500).send({
+           message: "Internal server error! "
+       })
+   }
 }

@@ -38,5 +38,7 @@ route.get('/movies/booking/:id',authMiddleware.isAuthorized,bookingController.ge
 route.get('/movies/bookings',authMiddleware.isAuthorized,bookingMiddleware.validateForGetBooking,bookingController.getAllBooking)
 //------------------------------------------------Payment routes -----------------------------------------------
 route.post('/movies/booking/payment',authMiddleware.isAuthorized,paymentMiddleware.validatePaymentBody,paymentController.createPayment)
+route.get('/movies/payments',authMiddleware.isAuthorized,paymentController.getAllpayments)
+route.get('/movies/payment/:id',authMiddleware.isAuthorized,paymentController.getPaymentById)
 module.exports = route;
 
