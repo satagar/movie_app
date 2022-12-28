@@ -8,6 +8,8 @@ const authController = require('../../../controllers/auth.controller')
 const authMiddleware = require('../../../middleware/authValidate.middleware')
 const bookingController = require('../../../controllers/booking.controller')
 const bookingMiddleware = require('../../../middleware/bookingValidation.middleware')
+const paymentMiddleware = require('../../../middleware/payment.middleware')
+const paymentController = require('../../../controllers/payment.controller')
 //------------------------------------------Movie routes---------------------------------------------
 route.post('/movie/create',movieMiddleware.movieValidate,movieController.createMovies)
 route.get('/movie/filter',authMiddleware.isAuthorized,movieController.movieFilter)
@@ -34,5 +36,7 @@ route.post('/movies/booking',authMiddleware.isAuthorized,bookingMiddleware.valid
 route.put('/movies/booking/update/:id',authMiddleware.isAuthorized,bookingMiddleware.updateBodyValidate,bookingController.bookingUpdate)
 route.get('/movies/booking/:id',authMiddleware.isAuthorized,bookingController.getBookingByID)
 route.get('/movies/bookings',authMiddleware.isAuthorized,bookingMiddleware.validateForGetBooking,bookingController.getAllBooking)
+//------------------------------------------------Payment routes -----------------------------------------------
+route.post('/movies/booking/payment',authMiddleware.isAuthorized,paymentMiddleware.validatePaymentBody,paymentController.createPayment)
 module.exports = route;
 
