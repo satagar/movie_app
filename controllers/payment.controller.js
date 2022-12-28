@@ -45,7 +45,7 @@ exports.getAllpayments  = async (req,res) => {
            }
            const booking = await BOOKING.find(reqData);
            const bookingIds = booking.map(b => b._id);
-           const payment = await PAYMENT.find({_id:{ $all: bookingIds }})
+           const payment = await PAYMENT.find({bookingId:{ $in: bookingIds }})
            return res.status(200).send(payment);
      }catch( err ){
         return res.status(500).send({
