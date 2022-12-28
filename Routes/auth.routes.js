@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+//----------------PaymentControllerAndMiddlewares----------------
+const createPaymentController = require("../Controllers/createPayment.controller");
+const validatePayment = require("../Middlewares/verifyPaymentReq")
+
 //-------------------BookingCOntrollerAndMiddleware-----------
 const bookingController = require("../Controllers/createBooking.controller")
 const validateBookingReq = require("../Middlewares/verifyBookingReq")
@@ -31,6 +35,9 @@ const validate = require("../Utilis/validateToken")
 const isAdminvalidation = require("../Utilis/isAdmin");
 
 //-----------------------------------------ROUTES-----------------------------------------------------------------
+
+//---------------------------Payment routes------------------------------------
+router.post("/movie_app/api/v1/payments", validate.validateToken, validatePayment.verifyPayment, createPaymentController.creatingPayment);
 
 //---------------------------Booking routes------------------------------------
 router.post("/movie_app/api/v1/bookings", validate.validateToken, validateBookingReq.verifyBooking, bookingController.createBooking)
