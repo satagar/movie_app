@@ -20,9 +20,13 @@ const theaterSchema = new mongoose.Schema({
         type: [mongoose.SchemaTypes.ObjectId],
         ref: 'movies'
     },
+    ownerId:{
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:"user"
+    },
     createAt: {
         type: String,
-        default: () => {
+        default: () => {         
             return Date.now()
         },
         immutable: true

@@ -1,6 +1,7 @@
 const PAYMENT = require('../models/payment.model');
 const BOOKING = require('../models/booking.model')
 const USER = require('../models/user.model')
+const sendEmail = require('../utils/notificationClient')
 exports.createPayment = async (req, res) => {
     const reqData = {
         bookingId: req.body.bookingId,
@@ -12,7 +13,6 @@ exports.createPayment = async (req, res) => {
         });
         const currentTime = Date.now()
         const minutes = Math.floor(((currentTime - parseInt(booking.createAt)) /1000)/ 60);
-        console.log(minutes /60 , currentTime , booking.createAt)
         if (minutes > 5) {
             booking.status = 'EXPIRED';
             await booking.save();
@@ -24,7 +24,13 @@ exports.createPayment = async (req, res) => {
         const payment = await PAYMENT.create(reqData)
            booking.status = 'COMPLETED'
            await booking.save()
+           const user = await USER.findOne({_id:booking.userId})
+          /*
+                 send notification for complete the payment by users
+          */
+          sendEmail(payment._id,`payment successfully for the booking ID : ${booking._id}`,`${JSON.stringify(booking)}`,user.email,'movie-app@gmail.com')
         return res.status(201).send({
+            message:"Payment successfully.",
             Booking_Status : booking.status,
             Payment_Summary : payment
         });

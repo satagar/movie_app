@@ -88,3 +88,20 @@ exports.isAdmin =async (req,res,next)=>{
         })
     }
 }
+exports.isAdminOrClient =async (req,res,next)=>{
+    try {
+            const user = await USER.findOne({userId:req.userId});
+            if(user && user.userType!=='CUSTOMER'){
+                 next()
+            }else{
+                    return res.status(403).send({
+                        message:"Require Admin Role Or Client Role!"
+                    })
+            }
+    }catch(err){
+        console.log(err.message);
+        return res.status(500).send({
+            message:"Internal server error. please try after some time."
+        })
+    }
+}

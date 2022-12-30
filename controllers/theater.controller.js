@@ -1,16 +1,21 @@
 const THEATER = require('../models/theater.model');
 const fakeTheater = require('../seeders/theater.seed')
-
+const USER = require('../models/user.model')
+const sendEmail = require('../utils/notificationClient')
 exports.createTheater = async (req, res) => {
     const body = req.body;
     const reqData = {
         name: body.name,
         description: body.description,
         city: body.city,
-        pincode: body.pincode
+        pincode: body.pincode,
     }
     try {
         const theater = await THEATER.create(reqData)
+        const user = await USER.findOne({userId:req.userId})
+        sendEmail(theater._id,`Theater created successfully`, `Theater created successfully . the Theater ID : ${theater._id} and theater name is ${theater.name} . the theater created by ${user.name} .`,user.email,"movie-app@gmail.com")
+        theater.ownerId = user._id
+        await theater.save()
         return res.status(201).send({
             message: "Theater created successfully!",
             Created_Theater: theater
@@ -97,6 +102,8 @@ exports.updateTheater = async (req, res) => {
             theater.pincode = body.pincode
         }
         await theater.save()
+        const user = await USER.findOne({userId:req.userId})
+        sendEmail(theater._id,`Theater Updated with the Theater ID : ${theater._id}`, `Theater updated successfully by the ${user.name} ! Updated theater summary : ${theater}`,user.email,"movie-app@gmail.com")
         return res.status(200).send({
             message: "Theater updated successfully!",
             Updated_theater: theater
@@ -124,6 +131,11 @@ exports.deleteTheater = async (req, res) => {
                 message: "Theater does not exists for delete.",
             })
         }
+        /*
+             send Notification when user delete the theater
+        */
+        const user = await USER.findOne({userId:req.userId})
+        sendEmail(theater._id,`Theater deleted with the Theater ID : ${theater._id}`, `Theater Deleted successfully by the ${user.name}`,user.email,"movie-app@gmail.com")
         return res.status(200).send({
             message: "Theater deleted successfully!",
             deleted_theater: theater
@@ -149,16 +161,21 @@ exports.addMovieToTheater = async (req,res) => {
         const theater = await THEATER.findOne({
             _id: theaterId
         })
+        let data = '';
         if (insert==true) {
             movieIds.forEach(movie => {
                 theater.movies.push(movie)
             });
+            data =`Movie add in the theater ID is ${theater._id} and name : ${theater.name} . Movie add into the theater successfully . Thanks for adding movie into the theater.`
         }else {
             movieIds.forEach(movie => {
                 theater.movies =  theater.movies.filter(id => id!=movie)
             });
+            data = `Movie Delete From the theater ID is ${theater._id} and name : ${theater.name} . Movie Delete from the theater successfully . Thanks You `
         }
         await theater.save()
+        const user = await USER.findOne({userId:req.userId})
+        sendEmail(theater._id,`Update Information the theater ID is ${theater._id} and name : ${theater.name}`,data,user.email,"movie-app@gmail.com")
         return res.status(200).send({
             Updated_Theater: theater
         })
@@ -239,6 +256,8 @@ exports.deleteTheaterByName = async (req, res) => {
                 message: `${name} Theater does not exists .`,
             })
         }
+        const user = await USER.findOne({userId:req.userId})
+        sendEmail(theater._id,`Theater deleted with the Theater ID : ${theater._id}`, `Theater Deleted successfully by the ${user.name}`,user.email,"movie-app@gmail.com")
         return res.status(200).send({
             message: `${name} Theater deleted successfully!`,
             deleted_theater: theater

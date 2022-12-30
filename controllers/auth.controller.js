@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const secretKey = require('../configs/scretKey')
 const {usertype,userStatus}= require('../utils/constant')
+const sendEmail = require('../utils/notificationClient')
 
 exports.signup = async (req,res)=>{
     const body = req.body;
@@ -20,6 +21,8 @@ exports.signup = async (req,res)=>{
         }
         try {
                 const user = await USER.create(userData);
+                const date = new Date();
+                sendEmail(user.userId,"Welcome to Movie booking App",`Welcome to movie booking app Creating Account time : ${date.toLocaleDateString()+'  '+date.toLocaleTimeString()} . your userID is : ${user.userId} enjoy with app .`,user.email,'movie-app@gmail.com')
                 return res.status(201).send({
                     message:"User Signup successfully.",
                     UserID :user.userId
@@ -55,6 +58,8 @@ exports.signup = async (req,res)=>{
                       const token = jwt.sign({userId:user.userId},secretKey.scretKey,{
                         expiresIn:'1d'
                       })
+                      const date = new Date();
+                      sendEmail(user.userId,"Anyone Login in your account please verify yourself ",`Anyone Login in your account please verify yourself Login at : ${date.toLocaleDateString()+'  '+date.toLocaleTimeString()} userID : ${user.userId}`,user.email,'movie-app@gmail.com')
                       return res.status(200).send({
                         message:"User  login Successfully!",
                         accessToken : token
@@ -80,6 +85,8 @@ exports.UpdatePassword = async (req,res)=>{
                   }
                  user.password = bcrypt.hashSync(body.password,10)
                  await user.save();
+                 const date = new Date();
+                 sendEmail(user.userId,"Anyone try to change your password Please verfiy yourself",`Anyone try to change your password Please verfiy yourself Update your password time : ${date.toLocaleDateString()+'  '+date.toLocaleTimeString()} userID : ${user.userId}`,user.email,'movie-app@gmail.com')
                  return res.status(200).send({
                      message:"user password update successfully."
                  })
