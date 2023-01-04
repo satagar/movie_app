@@ -1,6 +1,6 @@
-const Booking = require("../Models/bookingData.model");
-const UserModel = require("../Models/user.model")
-const constant = require("../Utilis/constant")
+const Booking = require("../../Models/bookingData.model");
+const UserModel = require("../../Models/user.model")
+const constant = require("../../Utilis/constant")
 exports.createBooking = async(req, res) => {
 
     var user = await UserModel.findOne({

@@ -1,5 +1,5 @@
-const Booking = require("../Models/bookingData.model");
-const constant = require("../Utilis/constant")
+const Booking = require("../../Models/bookingData.model");
+const constant = require("../../Utilis/constant")
 
 exports.updateBooking = async(req, res) => {
     try {

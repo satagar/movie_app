@@ -1,5 +1,7 @@
-const Payment = require("../Models/Payment.model");
-const Booking = require("../Models/bookingData.model");
+const Payment = require("../../Models/Payment.model");
+const Booking = require("../../Models/bookingData.model");
+const UserModel = require("../../Models/user.model");
+
 
 exports.creatingPayment = async(req, res) => {
     const booking = await Booking.findOne({ _id: req.body.bookingId });
@@ -7,9 +9,9 @@ exports.creatingPayment = async(req, res) => {
     var bookingTime = booking.createdAt;
     var presentTime = Date.now();
 
-    var Diff = Math.floor(((presentTime - bookingTime) / 1000) / 60);
+    var minTimeToConfirm = Math.floor(((presentTime - bookingTime) / 1000) / 60); // timeStamp is in ms (1000/60) used to convert in mins
 
-    if (Diff > 5) {
+    if (minTimeToConfirm > 5) {
         booking.status = "EXPIRED";
         await booking.save();
         return res.status(200).send({
@@ -25,10 +27,15 @@ exports.creatingPayment = async(req, res) => {
 
     try {
         const payment = await Payment.create(paymentObj);
-        booking.status = "SUCCESSFUL";
+        booking.status = "COMPLETED";
         await booking.save();
 
+        const user = await UserModel.findOne({ userId: req.userId });
+        sendEmail(payment._id, `Successful Payment for BookingId: ${booking._id}`, user.emailId, "pranit_movie_app@gmail.com");
+
         res.status(201).send(payment);
+
+
 
     } catch (error) {
         console.log(error);

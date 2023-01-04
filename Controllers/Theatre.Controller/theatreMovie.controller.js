@@ -1,5 +1,5 @@
-const Theatre = require("../Models/theatre.model");
-const Movie = require("../Models/movie.model")
+const Theatre = require("../../Models/theatre.model");
+const Movie = require("../../Models/movie.model")
 
 exports.addMovieToTheatre = async(req, res) => {
     try {

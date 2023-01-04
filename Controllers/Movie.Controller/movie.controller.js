@@ -1,4 +1,5 @@
-const Movie = require("../Models/movie.model");
+const Movie = require("../../Models/movie.model");
+const User = require("../../Models/user.model");
 
 exports.movieCreation = async(req, res) => {
     const movieObj = {
@@ -12,10 +13,12 @@ exports.movieCreation = async(req, res) => {
         Language: req.body.Language,
         casts: req.body.casts
     }
-
+    let user;
     try {
         const movie = await Movie.create(movieObj);
-        res.status(201).send(movie)
+        res.status(201).send(movie);
+        user = await User.findOne({ userId: req.userId })
+        sendEmail(movie._id, `Movie successfully Created By UserId: ${user._id}`, user.emailId, "pranit_movie_app@gmail.com");
     } catch (error) {
         console.log(error);
         res.status(500).send({

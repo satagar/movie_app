@@ -1,4 +1,4 @@
-const Booking = require("../Models/bookingData.model");
+const Booking = require("../../Models/bookingData.model");
 
 exports.findById = async(req, res) => {
     try {

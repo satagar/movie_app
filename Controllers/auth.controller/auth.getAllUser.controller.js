@@ -1,4 +1,4 @@
-const UserModel = require('../Models/user.model');
+const UserModel = require('../../Models/user.model');
 
 exports.findAll = async(req, res) => {
     let userNameReq = req.query.name,

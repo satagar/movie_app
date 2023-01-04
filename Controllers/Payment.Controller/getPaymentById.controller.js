@@ -1,4 +1,4 @@
-const Payment = require("../Models/Payment.model")
+const Payment = require("../../Models/Payment.model")
 
 exports.getPaymentOnId = async(req, res) => {
     try {

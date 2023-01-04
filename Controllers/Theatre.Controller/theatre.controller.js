@@ -1,4 +1,4 @@
-const Theatre = require("../Models/theatre.model")
+const Theatre = require("../../Models/theatre.model")
 
 exports.theatreCreation = async(req, res) => {
     const theatreObj = {

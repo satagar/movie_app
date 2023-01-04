@@ -21,7 +21,7 @@ const bookingSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ["IN_PROGRESS", "EXPIRED", "SUCCESSFUL"],
+        enum: ["IN_PROGRESS", "EXPIRED", "COMPLETED"],
         default: "IN_PROGRESS"
     },
 
