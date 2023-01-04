@@ -1,1 +1,2 @@
-# movie_app
+# movie_app 
+Pranit Movie Booking APP
