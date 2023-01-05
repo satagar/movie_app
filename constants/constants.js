@@ -20,5 +20,9 @@ module.exports = {
         pending: "PENDING",
         suspended: "SUSPENDED"
     },
+    paymentStatus: {
+        success: "SUCCESS",
+        failed: "FAILED"
+    },
     ticketPrice: 200
 }

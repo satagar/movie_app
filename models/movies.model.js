@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
-const appConstant = require('../constants/constants')
+//const releaseStatus = require('../constants/constants')
 
 const movieSchema = new mongoose.Schema({
     movieId: {
-        type: String,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
     name: {

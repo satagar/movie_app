@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+// const bookingModel = require('../models/booking.model')
+// const constants = require('../constants/constants')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -6,9 +8,8 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     userId: {
-        type: String,
-        required: true,
-        unique: true
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true
     },
     email: {
         type: String,
@@ -42,7 +43,7 @@ const userSchema = new mongoose.Schema({
         default: "approved"
     },
     bookingId: {
-        type: String,
+        type: mongoose.SchemaTypes.ObjectId,
         ref: "bookingModel"
     }
 })

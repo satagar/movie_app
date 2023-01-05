@@ -1,25 +1,26 @@
-const userId = require("./user.model")
-const movieId = require('./movies.model')
-const theatreId = require('./theatre.model')
+// const userId = require("./user.model")
+// const movieId = require('./movies.model')
+// const theatreId = require('./theatre.model')
 const { default: mongoose } = require("mongoose")
+//const bookingStatus = require('../constants/constants')
 
 const bookingSchema = new mongoose.Schema({
     bookingId: {
-        type: String,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
     movieId: {
-        type: String,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true,
         ref: "movieModel"
     },
     theatreId: {
-        type: String,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true,
         ref: "theatreModel"
     },
     userId: {
-        type: String,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true,
         ref: "userModel"
     },
