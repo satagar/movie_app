@@ -1,7 +1,9 @@
 const mongoose  = require('mongoose');
 const app = require('./index')
+const mongodbUrl = require('./configs/scretkey')
 require('dotenv').config()
-mongoose.connect(process.env.MONGO_URI+process.env.DB_NAME,{family:4},(err)=>{
+// process.env.MONGO_URI+process.env.DB_NAME
+mongoose.connect(mongodbUrl.production_DB_URL,{family:4},(err)=>{
           if(!err){
             console.log('Node envirnment : ', process.env.NODE_ENV)
             console.log("database connected successfully DataBaseName : ", process.env.DB_NAME);
