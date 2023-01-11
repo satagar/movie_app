@@ -1,5 +1,5 @@
 const Theatre = require('../models/theatre.model');
-const theatreSeed=require('../seeders/theatre.seed');
+// const theatreSeed=require('../seeders/theatre.seed');
 
 exports.createTheatre = async (req,res)=>{
     const body= req.body;
@@ -34,10 +34,14 @@ exports.getTheatreById=async(req,res)=>{
     }
 }
 
-exports.grtAlltheatre= async(req,res)=>{
+exports.grtAlltheatre= async (req,res)=>{
     const condition = {};
+    const body= req.body;
     if(req.query.name){
         condition.name = req.query.name;
+    }
+    if(req.query.id){
+        condition.id = req.query.id;
     }
     if(req.query.city){
         condition.city = req.query.city;
@@ -184,10 +188,10 @@ exports.MovieInsideTheTheatre = async (req,res)=>{
     }
 }
 
-const createFakeTheater = async (data) => {
-    for (let i = 0; i < data.length; i++) {
-        await Theatre.create(data[i])
-    }
-    console.log('created successfully!')
-}
-createFakeTheater(theatreSeed.theatreData)
+// const createFakeTheater = async (data) => {
+//     for (let i = 0; i < data.length; i++) {
+//         await Theatre.create(data[i])
+//     }
+//     console.log('created successfully!')
+// }
+// createFakeTheater(theatreSeed.theatreData)

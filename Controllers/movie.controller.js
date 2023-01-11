@@ -1,5 +1,5 @@
 const Movie =require('../models/movie.model')
-const movieSeed=require('../seeders/movie.seed');
+// const movieSeed=require('../seeders/movie.seed');
 
 exports.createMovie= async(req,res)=>{
     const body = req.body;
@@ -11,16 +11,15 @@ exports.createMovie= async(req,res)=>{
         releaseStarus:body.releaseStarus,
         casts:body.casts,
         posterUrl:body.posterUrl,
-        
         director:body.director,
         language:body.language,
     }
     try {
         const movie = await Movie.create(movieObj);
-        res.status(201).send(movie);
+        return res.status(201).send(movie);
 
     } catch (error) {
-        res.status(500).send({
+        return res.status(500).send({
             massage:'Error Occured!'
         })
     }
@@ -101,10 +100,10 @@ exports.deleteMovie = async (req, res) => {
     }
 }
 
-const createMovies = async (data)=>{
-    for(let i=0;i<data.length;i++){
-        await Movie.create(data[i])
-    }
-    console.log('fake movie created')
-}
-createMovies(movieSeed.movieData)
+// const createMovies = async (data)=>{
+//     for(let i=0;i<data.length;i++){
+//         await Movie.create(data[i])
+//     }
+//     console.log('fake movie created')
+// }
+// createMovies(movieSeed.movieData)

@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const userSchema= mongoose.Schema({
+const userSchema= new mongoose.Schema({
     userId:{
         type:String,
         required:true,
@@ -36,7 +36,7 @@ const userSchema= mongoose.Schema({
         },
         immutable: true
     },
-    updatededAt:{
+    updatedAt:{
         type:String,
         default:()=>{
             return Date.now();

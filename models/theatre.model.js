@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const theatreSchema= mongoose.Schema({
+const theatreSchema= new mongoose.Schema({
 
     name:{
         type:String,
@@ -19,7 +19,7 @@ const theatreSchema= mongoose.Schema({
         required:true
     },
     movie:{
-        type:[mongoose.SchemaType.ObjectId],
+        type:[mongoose.SchemaTypes.ObjectId],
         ref: 'movie'
     },
     createdAt:{
