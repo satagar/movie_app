@@ -1,6 +1,7 @@
 const Payment = require("../../Models/Payment.model");
 const Booking = require("../../Models/bookingData.model");
 const UserModel = require("../../Models/user.model");
+const { sendEmail } = require("../../Utilis/notificationServer")
 
 
 exports.creatingPayment = async(req, res) => {

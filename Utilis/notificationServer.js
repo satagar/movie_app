@@ -1,7 +1,10 @@
 const Client = require("node-rest-client").Client
 const client = new Client();
 
+
 exports.sendEmail = (subject, content, emailId, ticketId, requester) => {
+    //•sendEmail :-  The method will accept a unique id for the notification object, subject of
+    //the mail, mail body, receiver’s mail id and requester mail which in this case is “mba-no-reply@mba.com”.
     var requestBody = {
         subject: subject,
         content: content,

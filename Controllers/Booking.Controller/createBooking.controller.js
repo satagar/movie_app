@@ -12,7 +12,7 @@ exports.createBooking = async(req, res) => {
         movieId: req.body.movieId,
         userId: user._id,
         status: req.body.status,
-        Timing: req.body.Timming,
+        Timing: req.body.Timing,
         noOfSeats: req.body.noOfSeats,
         totalCost: (req.body.noOfSeats * constant.ticketPrice)
     }
@@ -20,6 +20,7 @@ exports.createBooking = async(req, res) => {
         const booking = await Booking.create(bookingObj);
         res.status(201).send(booking)
     } catch (error) {
+        console.log(error)
         return res.status(500).send({
             message: "Error Occured in Creating booking "
         })

@@ -22,7 +22,7 @@ mongoose.connect(dbConfig.DB_URL, { family: 4 }, (error) => {
     } else {
         console.log('Node Environment :', process.env.NODE_ENV);
         console.log('Connection Successful to DB server:', dbConfig.DB_NAME);
-        seeders.fakeSeeders();
+        // seeders.fakeSeeders();
         app.use("/", userRoute, MovieRoute, TheatreRoute, BookingRoute, PaymentRoute);
 
         app.listen(Port, () => {
